@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('form_id');
             $table->unsignedInteger('user_id');
-            $table->json('response');
+            $table->unsignedInteger('question_id');
+            $table->json('answer'); // string for short and long / and array for remaining three to store the data of options
             $table->timestamps();
         });
     }

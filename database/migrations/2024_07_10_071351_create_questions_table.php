@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->string('name');
-            $table->string('description');
-            $table->boolean('published');
+            $table->unsignedInteger('form_id');
+            $table->integer('type'); // 1- short answer, 2- long answer, 3- mcq, 4- dropdown, 5- checkbox
+            $table->string('name');//question text
+            $table->json('options');
+            $table->boolean('required');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('questions');
     }
 };
