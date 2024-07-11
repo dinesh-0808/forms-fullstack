@@ -19,7 +19,7 @@
         <div class="bg-white rounded shadow-sm p-4 question-box title-box">
             <div class="formTitleAndDesc">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="formTitle" aria-describedby="headerHelp" value="Untitled Form">
+                    <input type="text" class="form-control" id="formTitle" aria-describedby="headerHelp" value="{{ $title }}">
                 </div>
                 <br>
                 <div class="form-group">

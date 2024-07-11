@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('form_id');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('question_id');
+            $table->unsignedBigInteger('form_id');
+            $table->foreign('form_id')->references('id')->on('forms')->cascadeOnDelete();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('question_id')->references('id')->on('questions')->cascadeOnDelete();
             $table->json('answer'); // string for short and long / and array for remaining three to store the data of options
             $table->timestamps();
         });

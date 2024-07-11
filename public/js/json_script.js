@@ -8,7 +8,7 @@ function sendFormDataToLaravel() {
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
 
-    fetch("/forms", {
+    fetch("/create-form", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -19,7 +19,7 @@ function sendFormDataToLaravel() {
         body: formData,
     })
         .then((response) => {
-            // window.location.href = "http://127.0.0.1:8000/form";
+            window.location.href = "http://127.0.0.1:8000/home";
         })
         .catch((error) => {
             console.error("Error:", error);

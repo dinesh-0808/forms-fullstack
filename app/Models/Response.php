@@ -16,6 +16,9 @@ class Response extends Model
         'answer'
     ];
 
+    protected $casts = [
+        'answer' => 'array'
+    ];
 
 
 }

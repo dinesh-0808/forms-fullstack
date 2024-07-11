@@ -18,6 +18,10 @@ class Question extends Model
         'required',
     ];
 
+    protected $casts = [
+        'options' => 'array',
+    ];
+
     public function response(){
         return $this->hasOne(Response::class);
     }

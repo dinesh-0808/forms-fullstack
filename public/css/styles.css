@@ -15,42 +15,42 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     border: 2px solid rgba(108, 117, 125, 0.2);
     position: relative;
-    
+
 }
 .title-box {
     border-top: 5px solid rgb(103, 58, 183);
 }
 
- 
+
 .preview-button {
-    position: relative; 
-    padding: 20px; 
-    background-color: white; 
-    border-radius: 8px; 
+    position: relative;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-top: 5px solid rgb(103, 58, 183);
     border-left: 5px solid rgb(71, 138, 201);
 
-    
+
 }
 
 /* Style for the button */
 .preview-button .btn-preview {
-    position: absolute; 
-    top: 10px; 
-    right: 10px; 
-    background-color: white; 
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
     color: #6c757d;
-    padding: 8px; 
+    padding: 8px;
     border: 0px solid #6c757d;
     border-radius: 50%;
-    cursor: pointer; 
+    cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px; 
-    height: 40px; 
+    width: 40px;
+    height: 40px;
 }
 
 /* Hover effect for the button */
@@ -63,25 +63,25 @@ body {
 
 .form-group select{
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 2px solid rgba(108, 117, 125, 0.2);
     background-color: white;
     padding: 20px;
 }
 
 .form-select-css {
-    
+
     /* Remove default border */
     padding-top: 2px;
             background-color: transparent;
-            font-size: 16px; 
-            padding: 8px; 
-            outline: none; 
-            appearance: none; 
+            font-size: 16px;
+            padding: 8px;
+            outline: none;
+            appearance: none;
 }
 
 .active-border {
-    border-left: 5px solid rgb(71, 138, 201); 
+    border-left: 5px solid rgb(71, 138, 201);
 
 }
 
@@ -128,7 +128,7 @@ body {
 
 .floating-button:hover {
     background-color: rgb(103, 58, 183);
-} 
+}
 
 
 .btn .btn-secondary .mt-2 {
@@ -180,16 +180,16 @@ body {
 .dropdown {
     height: 65px; /* Adjust the height as needed */
     width: 300px;
-  
+
 }
-/* 
+/*
 .sidebar {
     position: absolute;
     top: 0;
     left: 75%;
     top: 10%;
   }
-  
+
   .btnp {
     border: none;
     border-radius: 5px;
