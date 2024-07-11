@@ -7,24 +7,28 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Form;
 use App\Models\Question;
 use App\Models\Response;
+use App\Models\Answer;
+
 class FormController extends Controller
 {
     //
 
-    public function index(){
+    public function index()
+    {
         $user = Auth::user();
 
-        return view('user.form',compact('user'));
+        return view('user.form', compact('user'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $user = Auth::user();
         $data = $request->json()->all();
         // Log::info("logg info", $request->json()->all());
 
         $title = $data[0]['title'];
         $description = $data[0]['description'];
-        if(!$description){
+        if (!$description) {
             $description = "";
         }
         // dump($title, $description);
@@ -104,83 +108,95 @@ class FormController extends Controller
         return response()->json(['message' => 'Form data saved successfully'], 200);
     }
 
-    public function toggle($id){
+    public function destroy(Request $request, $id)
+    {
+        $user = Auth::user();
+        $form = Form::findOrFail($id);
+
+        $form->delete();
+        $forms = Form::all();
+        return view('home', compact(['user', 'forms']));
+    }
+
+    public function toggle($id)
+    {
         $user = Auth::user();
         $form = Form::findOrFail($id);
         $form->published = ($form->published === 1) ? 0 : 1;
         $form->save();
-        return view('user.responses',compact(['user','form']));
+        return view('user.responses', compact(['user', 'form']));
     }
 
-    public function response($id){
+    public function response($id)
+    {
         $user = Auth::user();
         $form = Form::findOrFail($id);
-        return view('user.responses',compact(['form']));
+        // $responses = $form->responses()->
+        return view('user.responses', compact(['form']));
     }
 
-    public function getResponse($id){
+    public function getResponse($id)
+    {
         $user = Auth::user();
         $form = Form::findOrFail($id);
 
-        return view('user.getResponse',compact(['user','form']));
+        return view('user.getResponse', compact(['user', 'form']));
     }
 
-    public function saveResponse(Request $request, $id){
+    public function saveResponse(Request $request, $id)
+    {
         $user = Auth::user();
         $form = Form::findOrFail($id);
         // dump($request->all());
         $request = $request->all();
+        $response = Response::create([
+            'form_id' => $form->id,
+            'user_id' => $user->id,
+        ]);
+
         $questions = $form->questions()->orderBy('id', 'asc')->get();
+
         // dump($request["55"]);
         $i = 1;
-        foreach($questions as $question){
-            if($question->type==1){
-                $text = $request["1".$i];
-                $response = Response::create([
-                    'form_id' => $form->id,
-                    'user_id' => $user->id,
+        foreach ($questions as $question) {
+            if ($question->type == 1) {
+                $text = $request["1" . $i];
+                $answer = Answer::create([
+                    'response_id' => $response->id,
                     'question_id' => $question->id,
                     'answer' => $text,
                 ]);
-            }
-            else if($question->type==2){
-                $text = $request["2".$i];
-                $response = Response::create([
-                    'form_id' => $form->id,
-                    'user_id' => $user->id,
+            } else if ($question->type == 2) {
+                $text = $request["2" . $i];
+                $answer = Answer::create([
+                    'response_id' => $response->id,
                     'question_id' => $question->id,
                     'answer' => $text,
                 ]);
-            }
-            else if($question->type==3){
-                $optionNumber = $request["3".$i];
-                $response = Response::create([
-                    'form_id' => $form->id,
-                    'user_id' => $user->id,
+            } else if ($question->type == 3) {
+                $optionNumber = $request["3" . $i];
+                $answer = Answer::create([
+                    'response_id' => $response->id,
                     'question_id' => $question->id,
                     'answer' => $optionNumber,
                 ]);
-            }
-            else if($question->type==4){
-                $optionNumber = $request["4".$i];
-                $response = Response::create([
-                    'form_id' => $form->id,
-                    'user_id' => $user->id,
+            } else if ($question->type == 4) {
+                $optionNumber = $request["4" . $i];
+                $answer = Answer::create([
+                    'response_id' => $response->id,
                     'question_id' => $question->id,
                     'answer' => $optionNumber,
                 ]);
-            }
-            else if($question->type==5){
+            } else if ($question->type == 5) {
                 $optionsChecked = [];
-                $j=0;
-                foreach($request["5".$i] as $opt){
-                    array_push($optionsChecked,$opt);
+                $j = 0;
+                foreach ($request["5" . $i] as $opt) {
+                    array_push($optionsChecked, $opt);
                     $j++;
                 }
                 // dd($optionsChecked);
-                $response = Response::create([
-                    'form_id' => $form->id,
-                    'user_id' => $user->id,
+                $answer = Answer::create([
+                    'response_id' => $response->id,
                     'question_id' => $question->id,
                     'answer' => $optionsChecked,
                 ]);
@@ -189,6 +205,6 @@ class FormController extends Controller
             $i++;
         }
 
-        return view('user.form-submitted',compact('form'));
+        return view('user.form-submitted', compact('form'));
     }
 }
