@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
 @section('style')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         .toggle-container {
+            position: absolute;
+            right: 15px;
+            top: 43px;
             display: flex;
             align-items: center;
             margin-top: 20px;
@@ -54,7 +58,17 @@
     </style>
 @endsection
 @section('content')
+
     <div class="container mt-4">
+        @if($form->published==0)
+        <div class="alert alert-danger">
+            <h4>form not accepting responses</h4>
+        </div>
+        @else
+        <div class="alert alert-success">
+        <h4>form accepting responses</h4>
+        </div>
+        @endif
         <div class="row">
             <div class="col-md-8">
                 <!-- Responses of the Form -->
@@ -63,6 +77,7 @@
                         Responses for Form: {{ $form->name }}
                     </div>
                     <div class="card-body">
+                        <h3>{{ count($responses) }} responses</h3>
                         <!-- Toggle Switch for Accepting Responses -->
                         <form id="publishForm" action="{{ route('form.publish.toggle', $form->id) }}" method="POST">
                             @csrf
@@ -80,15 +95,49 @@
 
 
                         <!-- Responses Display Section -->
-                        <div class="responses-list">
+                        {{-- <div class="responses-list"> --}}
                             {{-- Iterate through responses --}}
-                            @foreach ($form->responses as $response)
+                            {{-- @foreach ($form->responses as $response)
                                 <div class="mb-3">
                                     <h5>{{ $response->created_at->format('M d, Y H:i:s') }}</h5>
                                     <p>{{ $response->user_id }}</p>
                                 </div>
-                            @endforeach
+                            @endforeach --}}
+                        {{-- </div> --}}
+                        <br>
+                        @if (count($responses)>0)
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>User</th>
+                                        <th>Created</th>
+                                        <th>Responses</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach ($responses as $response)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $response->user->name }}</td>
+                                            <td>{{ $response->created_at->diffForHumans() }}</td>
+                                            <td>Responses</td>
+                                        </tr>
+                                    @endforeach
+
+
+
+                                </tbody>
+                            </table>
                         </div>
+                        @else
+                        <div style="text-align: center">
+                            <p>waiting for responses</p>
+                        </div>
+                        @endif
                     </div>
                 </div>
 
@@ -105,7 +154,7 @@
                             <input type="text" class="form-control" value="{{ route('form.getResponse', $form->id) }}"
                                 readonly>
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" onclick="copyLink()">Copy</button>
+                                <button @if($form->published==0) disabled @endif class="btn btn-outline-secondary" type="button" onclick="copyLink()">Copy</button>
                             </div>
                         </div>
                     </div>
@@ -126,9 +175,31 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.toggleButton').on('change', function() {
-                $('#publishForm').submit();
+        // $(document).ready(function() {
+        //     $('.toggleButton').on('change', function() {
+        //         $('#publishForm').submit();
+        //     });
+        // });
+        $(document).ready(function(){
+            $('#publishForm .toggleButton').change(function(){
+                var form = $('#publishForm');
+                var url = form.attr('action');
+                var data = form.serialize();
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: url,
+                    data: data,
+                    success: function(response) {
+                        console.log('Success:', response);
+                        // Optionally, you can update the UI based on the response
+                        window.location.href = "/form/{{ $form->id }}/responses";
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        // Handle the error
+                    }
+                });
             });
         });
     </script>

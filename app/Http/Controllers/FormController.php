@@ -103,7 +103,7 @@ class FormController extends Controller
             }
         }
 
-
+        session()->flash('form-create-message',"Form: $form->name created successfully!!");
 
         return response()->json(['message' => 'Form data saved successfully'], 200);
     }
@@ -115,6 +115,7 @@ class FormController extends Controller
 
         $form->delete();
         $forms = Form::all();
+        session()->flash('form-delete-message',"Form: $form->name deleted successfully!!");
         return view('home', compact(['user', 'forms']));
     }
 
@@ -122,17 +123,26 @@ class FormController extends Controller
     {
         $user = Auth::user();
         $form = Form::findOrFail($id);
-        $form->published = ($form->published === 1) ? 0 : 1;
+        if($form->published === 1){
+            $form->published = 0;
+            session()->flash('not-accept-message','form not accepting responses');
+        }
+        else {
+            $form->published = 1;
+            session()->flash('accept-message','form accepting responses');
+        }
         $form->save();
-        return view('user.responses', compact(['user', 'form']));
+        $responses = $form->responses;
+        return view('user.responses', compact(['user', 'form','responses']));
     }
 
     public function response($id)
     {
         $user = Auth::user();
         $form = Form::findOrFail($id);
+        $responses = $form->responses;
         // $responses = $form->responses()->
-        return view('user.responses', compact(['form']));
+        return view('user.responses', compact(['form','responses']));
     }
 
     public function getResponse($id)
@@ -160,46 +170,56 @@ class FormController extends Controller
         $i = 1;
         foreach ($questions as $question) {
             if ($question->type == 1) {
-                $text = $request["1" . $i];
-                $answer = Answer::create([
-                    'response_id' => $response->id,
-                    'question_id' => $question->id,
-                    'answer' => $text,
-                ]);
-            } else if ($question->type == 2) {
-                $text = $request["2" . $i];
-                $answer = Answer::create([
-                    'response_id' => $response->id,
-                    'question_id' => $question->id,
-                    'answer' => $text,
-                ]);
-            } else if ($question->type == 3) {
-                $optionNumber = $request["3" . $i];
-                $answer = Answer::create([
-                    'response_id' => $response->id,
-                    'question_id' => $question->id,
-                    'answer' => $optionNumber,
-                ]);
-            } else if ($question->type == 4) {
-                $optionNumber = $request["4" . $i];
-                $answer = Answer::create([
-                    'response_id' => $response->id,
-                    'question_id' => $question->id,
-                    'answer' => $optionNumber,
-                ]);
-            } else if ($question->type == 5) {
-                $optionsChecked = [];
-                $j = 0;
-                foreach ($request["5" . $i] as $opt) {
-                    array_push($optionsChecked, $opt);
-                    $j++;
+                if(isset($request["1" . $i])){
+                    $text = $request["1" . $i];
+                    $answer = Answer::create([
+                        'response_id' => $response->id,
+                        'question_id' => $question->id,
+                        'answer' => $text,
+                    ]);
                 }
-                // dd($optionsChecked);
-                $answer = Answer::create([
-                    'response_id' => $response->id,
-                    'question_id' => $question->id,
-                    'answer' => $optionsChecked,
-                ]);
+            } else if ($question->type == 2) {
+                if(isset($request["2" . $i])){
+                    $text = $request["2" . $i];
+                    $answer = Answer::create([
+                        'response_id' => $response->id,
+                        'question_id' => $question->id,
+                        'answer' => $text,
+                    ]);
+                }
+            } else if ($question->type == 3) {
+                if(isset($request["3" . $i])){
+                    $optionNumber = $request["3" . $i];
+                    $answer = Answer::create([
+                        'response_id' => $response->id,
+                        'question_id' => $question->id,
+                        'answer' => $optionNumber,
+                    ]);
+                }
+            } else if ($question->type == 4) {
+                if(isset($request["4" . $i])){
+                    $optionNumber = $request["4" . $i];
+                    $answer = Answer::create([
+                        'response_id' => $response->id,
+                        'question_id' => $question->id,
+                        'answer' => $optionNumber,
+                    ]);
+                }
+            } else if ($question->type == 5) {
+                if(isset($request["5" . $i])){
+                    $optionsChecked = [];
+                    $j = 0;
+                    foreach ($request["5" . $i] as $opt) {
+                        array_push($optionsChecked, $opt);
+                        $j++;
+                    }
+                    // dd($optionsChecked);
+                    $answer = Answer::create([
+                        'response_id' => $response->id,
+                        'question_id' => $question->id,
+                        'answer' => $optionsChecked,
+                    ]);
+                }
             }
 
             $i++;

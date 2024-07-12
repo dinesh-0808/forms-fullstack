@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group">
                         <label for="1{{ $loop->iteration }}"></label>
-                        <input type="text" name="1{{ $loop->iteration }}"class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="write question here">
+                        <input type="text" name="1{{ $loop->iteration }}"class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="write question here" @if ($question->required==1) required @endif>
                     </div>
                 </div>
                 @elseif ($question->type == 2)
@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group">
                         <label for="2{{ $loop->iteration }}"></label>
-                        <textarea class="form-control" id="inputHeader" name="2{{ $loop->iteration }}" aria-describedby="headerHelp" placeholder="Write question here"></textarea>
+                        <textarea class="form-control" id="inputHeader" name="2{{ $loop->iteration }}" aria-describedby="headerHelp" placeholder="Write question here" @if ($question->required==1) required @endif></textarea>
                     </div>
                 </div>
                 @elseif ($question->type==3)
@@ -58,7 +58,7 @@
                         <div class="mcq-options" id="multipleChoice{{ $loop->iteration }}">
                             @foreach ($question->options as $option)
                             <div class="form-check" id="multipleChoice{{ $loop->parent->iteration }}">
-                                <input type="radio" class="form-check-input" name="3{{ $loop->parent->iteration }}" id="mcqOption{{ $loop->parent->iteration }}{{ $loop->iteration }}" value="{{ $loop->iteration }}">
+                                <input type="radio" class="form-check-input" name="3{{ $loop->parent->iteration }}" id="mcqOption{{ $loop->parent->iteration }}{{ $loop->iteration }}" value="{{ $loop->iteration }}" @if ($question->required==1) required @endif>
                                 <label class="form-check-label" for="mcqOption{{ $loop->parent->iteration }}">{{ $option }}</label>
                             </div>
                             @endforeach
@@ -72,7 +72,8 @@
                             <h4><strong>{{ $question->name }}@if($question->required===1)<span style="color: red;">*</span>@endif</strong></h4>
                         </div>
                         <br>
-                        <select class="form-control" name="4{{ $loop->iteration }}">
+                        <select class="form-control" name="4{{ $loop->iteration }}" @if ($question->required==1) required @endif>
+                            <option value="" disabled selected>Select an option</option>
                             @foreach ($question->options as $option)
                             <option value="{{ $loop->iteration }}">{{ $option }}</option>
                             @endforeach
@@ -102,7 +103,7 @@
                             <h4><strong>{{ $question->name }}@if($question->required === 1)<span style="color: red;">*</span>@endif</strong></h4>
                         </div>
                         <br>
-                        <div id="checkbox-options{{ $loop->iteration }}">
+                        <div id="checkbox-options{{ $loop->iteration }}" class="checkbox-group" data-required=@if ($question->required==1){{ true }}@else{{ false }}@endif>
                             @foreach ($question->options as $option)
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="checkboxOption{{ $loop->parent->iteration }}{{ $loop->iteration }}" name="5{{ $loop->parent->iteration }}[]" value="{{ $loop->iteration }}">
@@ -137,4 +138,51 @@
     </div>
 </div>
 @endif
+@endsection
+
+
+@section('script')
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('form').addEventListener('submit', function(event) {
+        let checkboxGroups = document.querySelectorAll('.checkbox-group[data-required="1"]');
+        let valid = true;
+
+        checkboxGroups.forEach(function(group) {
+            let checkboxes = group.querySelectorAll('input[type="checkbox"]');
+            let checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+            if (!checked) {
+                valid = false;
+                group.classList.add('error');
+
+                // Check if the error message already exists
+                let errorMessage = group.querySelector('.error-message');
+                if (!errorMessage) {
+                    errorMessage = document.createElement('div');
+                    errorMessage.classList.add('error-message');
+                    errorMessage.style.color = 'red'
+                    errorMessage.innerText = 'Please select at least one option.';
+                    group.appendChild(errorMessage);
+                }
+            } else {
+                group.classList.remove('error');
+                let errorMessage = group.querySelector('.error-message');
+                if (errorMessage) {
+                    errorMessage.remove();
+                }
+            }
+        });
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+});
+</script>
+
+
+
+
 @endsection

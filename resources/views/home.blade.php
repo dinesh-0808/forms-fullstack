@@ -1,10 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+<div class="container">
+        @if(Session::has('form-delete-message'))
+        <div class="alert alert-danger">
+        {{ Session::get('form-delete-message') }}
+        </div>
+        @elseif(Session('form-create-message'))
+        <div class="alert alert-success">
+        {{ Session::get('form-create-message') }}
+        </div>
+        @endif
         <div class="row">
+
             <div class="col-sm-3">
-                <form method="post" action="{{ route('user.create.form') }}">
+                <form method="post" id="create-form" action="{{ route('user.create.form') }}">
                     @csrf
 
                     <div class="form-group">
@@ -24,11 +34,13 @@
                     <button type="submit" id="title" class="btn btn-primary">Create</button>
                 </form>
             </div>
+
             <div class="col-sm-9">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">User Forms</h6>
                         <div class="card-body">
+                            @if(count($forms)>0)
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -41,23 +53,13 @@
                                             <th>Responses</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Title</th>
-                                            <th>Created At</th>
-                                            <th>Published</th>
-                                            <th>Delete</th>
-                                            <th>Responses</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
 
                                         @foreach ($forms as $form)
                                             <tr>
-                                                <td>{{ $form->id }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $form->name }}</td>
-                                                <td>{{ $form->created_at }}</td>
+                                                <td>{{ $form->created_at->diffForHumans() }}</td>
                                                 <td>
 
                                                     {{-- <div class="toggle-container">
@@ -75,11 +77,13 @@
 
                                                 </td>
                                                 <td>
-                                                    <form action="{{ route('form.destroy', $form->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input type="submit" class="btn btn-danger"name="delete">
-                                                    </form>
+                                                    <div style="text-align: center;">
+                                                        <form action="{{ route('form.destroy', $form->id) }}" method="POST" id="delete-form">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="submit" class="deleteButton btn btn-danger" value="delete">
+                                                        </form>
+                                                    </div>
                                                 </td>
                                                 <td><a href="{{ route('form.response', $form->id) }}">responses</a>
                                                 </td>
@@ -89,10 +93,15 @@
 
                                     </tbody>
                                 </table>
+                                @else
+                                <div class="container" style="text-align: center">
+                                    <h5>No forms yet</h5>
+                                    <p>Create a Form to get started</p>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
-
                 </div>
 
             </div>
@@ -110,4 +119,33 @@
         });
     });
 </script> --}}
+    <script>
+        $(document).ready(function() {
+        $('.deleteButton').click(function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Confirm deletion if needed
+            if (!confirm("Are you sure you want to delete this form?")) {
+                return false;
+            }
+
+            // Perform AJAX request
+            $.ajax({
+                url: $('#delete-form').attr('action'),
+                type: 'POST',
+                data: $('#delete-form').serialize(),
+                success: function(response) {
+                    // Handle success response here (if needed)
+                    window.location.href = "/home";
+                    console.log('Deleted successfully.');
+                    // Optionally, update UI or show a message
+                },
+                error: function(error) {
+                    // Handle error response here (if needed)
+                    console.error('Error deleting:', error);
+                }
+            });
+        });
+    });
+    </script>
     @endsection

@@ -19,7 +19,7 @@ function sendFormDataToLaravel() {
         body: formData,
     })
         .then((response) => {
-            window.location.href = "http://127.0.0.1:8000/home";
+            window.location.href = "/home";
         })
         .catch((error) => {
             console.error("Error:", error);

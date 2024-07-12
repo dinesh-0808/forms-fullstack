@@ -14,13 +14,15 @@
 
 
     @yield('css')
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     <!-- <link rel="stylesheet" href="/all.min.css"> -->
 
 
 </head>
 
 <body>
-@yield('content')
 
+@yield('content')
+@yield('script')
 </body>
 </html>
