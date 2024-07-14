@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Response;
+use App\Models\Answer;
 
 class Question extends Model
 {
@@ -22,7 +23,13 @@ class Question extends Model
         'options' => 'array',
     ];
 
-    public function response(){
+    public function response()
+    {
         return $this->hasOne(Response::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }
