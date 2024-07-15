@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function () {
     var formContainer = document.getElementById('form-container');
 
@@ -491,4 +493,5 @@ function deleteQuestionBox(e) {
 //         console.log(`Moving sidebar to: 0px`);  // Debugging line
 //     }
 //   }
+
 

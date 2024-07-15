@@ -12,4 +12,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/form/{id}', [FormController::class, 'getResponse'])->name('form.getResponse');
     Route::post('form/{id}', [FormController::class, 'saveResponse'])->name('form.saveResponse');
     Route::delete('/form/{id}', [FormController::class, 'destroy'])->name('form.destroy');
+    Route::get('/form/{id}/edit',[FormController::class, 'edit'])->name('form.edit');
+    Route::post('/form/{id}/update',[FormController::class, 'update'])->name('form.update');
 });

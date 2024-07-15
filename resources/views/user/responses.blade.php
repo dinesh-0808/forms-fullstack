@@ -96,14 +96,14 @@
                                 <a class="nav-link active" id="summary-tab" data-toggle="tab" href="#summary" role="tab"
                                     aria-controls="summary" aria-selected="true">Summary</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" id="question-tab" data-toggle="tab" href="#question" role="tab"
                                     aria-controls="question" aria-selected="false">Question</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="individual-tab" data-toggle="tab" href="#individual" role="tab"
                                     aria-controls="individual" aria-selected="false">Individual</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                     <div class="card-body">
@@ -144,8 +144,8 @@
                         @endif --}}
                         <div class="tab-content" id="myTabContent"
                             style="display: flex;
-    justify-content: center; /* Centers content horizontally */
-">
+                            justify-content: center; /* Centers content horizontally */
+                            ">
                             <div class="tab-pane fade show active" id="summary" role="tabpanel"
                                 aria-labelledby="summary-tab">
                                 @foreach ($form->questions as $question)
@@ -153,13 +153,13 @@
                                         style="padding: 10px; margin: 10px; width: 96%;">
                                         <h3 class="card-title">{{ $question->name }}</h3>
                                         <h6>{{ count($question->answers) }} responses</h6>
-                                        @if ($question->type == 1 || $question->type == 2)
+                                        @if (($question->type == 1 || $question->type == 2) && count($question->answers))
                                             @foreach ($question->answers as $answer)
                                                 <div class="container rounded" style="border: 1px solid #ccc;">
                                                     <p>{{ $answer->answer }}</p>
                                                 </div>
                                             @endforeach
-                                        @elseif ($question->type == 3 || $question->type == 4)
+                                        @elseif (($question->type == 3 || $question->type == 4) && count($question->answers))
                                             {{-- {{ dd(collect($question->answers)->groupBy('answer')) }} --}}
                                             {{-- collect($question->options) --}}
                                             <canvas id="chart-{{ $question->id }}"></canvas>
@@ -178,7 +178,7 @@
                                                     data: chartData
                                                 });
                                             </script>
-                                        @elseif ($question->type == 5)
+                                        @elseif (($question->type == 5) && count($question->answers))
                                             <canvas id="chart-{{ $question->id }}"></canvas>
                                             <script>
                                                 var ctx = document.getElementById('chart-{{ $question->id }}').getContext('2d');
@@ -205,7 +205,7 @@
                                 @endforeach
                             </div>
 
-                            <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
+                            {{-- <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
                                 @foreach ($form->questions as $question)
                                     <div class="container border border-dark rounded"
                                         style="padding: 10px; margin: 10px; width: 66%;">
@@ -220,7 +220,7 @@
                                         <h5 class="card-title">{{ $question->name }}</h5>
                                     </div>
                                 @endforeach
-                            </div>
+                            </div> --}}
                         </div>
 
                     </div>

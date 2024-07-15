@@ -59,7 +59,7 @@
                                             @foreach ($forms as $form)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $form->name }}</td>
+                                                    <td><a href="{{ route('form.edit',$form->id) }}">{{ $form->name }}</a></td>
                                                     <td>{{ $form->created_at->diffForHumans() }}</td>
                                                     <td>
 

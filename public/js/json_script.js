@@ -1,6 +1,19 @@
-document
-    .getElementById("form-submit")
-    .addEventListener("click", sendFormDataToLaravel);
+if(document.getElementById("form-submit")){
+
+        document
+            .getElementById("form-submit")
+            .addEventListener("click", sendFormDataToLaravel);
+    }
+
+    if(document.getElementById("form-edit")){
+
+        document
+        .getElementById("form-edit")
+        .addEventListener("click", editFormDataToLaravel);
+    }
+
+
+
 
 function sendFormDataToLaravel() {
     let formData = createJsonForm();
@@ -16,7 +29,7 @@ function sendFormDataToLaravel() {
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content"),
         },
-        body: formData,
+        body: JSON.stringify(formData),
     })
         .then((response) => {
             window.location.href = "/home";
@@ -25,12 +38,48 @@ function sendFormDataToLaravel() {
             console.error("Error:", error);
         });
 }
+function editFormDataToLaravel() {
+    let formData = createJsonForm();
+    // let data = formData.json;
+    // let idObject = formData.find(item => item.hasOwnProperty('id'));
+    let id = formData[0].id;
+    // console.log("fdsfdgsfgfsd",formData[0].id);
+    delete formData[0];
+    let csrf = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
+
+    fetch(`/form/${id}/update`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
+        body: JSON.stringify(formData),
+    })
+        .then((response) => {
+            // window.location.href = "/home";
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
+
 
 function createJsonForm() {
     let formData = [];
     let formContainerTitle = document.getElementById("form-container-title");
-
     let formContainer = document.getElementById("form-container");
+    if(document.getElementById('form-edit')){
+        let form_id = document.getElementById('form-edit').getAttribute('form');
+    formData.push(
+        {
+            id: form_id,
+        }
+    )
+    }
 
     let children = formContainerTitle.children;
 
@@ -152,6 +201,6 @@ function createJsonForm() {
             }
         }
     }
-    // console.log(formData);
-    return JSON.stringify(formData);
+    // console.log(formData.id);
+    return formData;
 }
