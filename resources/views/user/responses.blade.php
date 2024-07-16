@@ -3,6 +3,14 @@
 @section('style')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
+        .question-box {
+            margin-bottom: 20px;
+            margin-top: 0px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            border: 2px solid rgba(108, 117, 125, 0.2);
+            position: relative;
+        }
         .toggle-container {
             position: absolute;
             right: 15px;
@@ -55,6 +63,8 @@
         input:checked+.slider:before {
             transform: translateX(15.6px);
         }
+
+
     </style>
 @endsection
 @section('content')
@@ -73,9 +83,10 @@
             <div class="col-md-8">
                 <!-- Responses of the Form -->
                 <div class="card">
+                    {{-- style="background-color: #fff0ff" --}}
                     <div class="card-header">
                         Responses for Form: {{ $form->name }}
-                        <h3>{{ count($responses) }} responses</h3>
+                        <h3>{{ count($form->responses) }} responses</h3>
                         <!-- Toggle Switch for Accepting Responses -->
                         <form id="publishForm" action="{{ route('form.publish.toggle', $form->id) }}" method="POST">
                             @csrf
@@ -93,60 +104,26 @@
                         <br>
                         <ul class="nav nav-tabs card-header-tabs justify-content-center" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="summary-tab" data-toggle="tab" href="#summary" role="tab"
+                                <a class="nav-link active" id="individual-tab" data-toggle="tab" href="#individual" role="tab"
+                                    aria-controls="individual" aria-selected="false">Individual</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab"
                                     aria-controls="summary" aria-selected="true">Summary</a>
                             </li>
                             {{-- <li class="nav-item">
                                 <a class="nav-link" id="question-tab" data-toggle="tab" href="#question" role="tab"
                                     aria-controls="question" aria-selected="false">Question</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="individual-tab" data-toggle="tab" href="#individual" role="tab"
-                                    aria-controls="individual" aria-selected="false">Individual</a>
                             </li> --}}
+
                         </ul>
                     </div>
-                    <div class="card-body">
-                        {{-- @if (count($responses) > 0)
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>User</th>
-                                            <th>Created</th>
-                                            <th>Responses</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-
-                                        @foreach ($responses as $response)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $response->user->name }}</td>
-                                                <td>{{ $response->created_at->diffForHumans() }}</td>
-                                                <td>
-                                                    <a href="{{ route('response.show', $response->id) }}">response</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div style="text-align: center">
-                                <p>waiting for responses</p>
-                            </div>
-                        @endif --}}
+                    <div class="card-body" style="background-color: #fff0ff">
                         <div class="tab-content" id="myTabContent"
                             style="display: flex;
                             justify-content: center; /* Centers content horizontally */
                             ">
-                            <div class="tab-pane fade show active" id="summary" role="tabpanel"
+                            <div class="tab-pane fade show" id="summary" role="tabpanel"
                                 aria-labelledby="summary-tab">
                                 @foreach ($form->questions as $question)
                                     <div class="container border border-dark rounded"
@@ -212,15 +189,101 @@
                                         <h5 class="card-title">{{ $question->name }}</h5>
                                     </div>
                                 @endforeach
-                            </div>
-                            <div class="tab-pane fade" id="individual" role="tabpanel" aria-labelledby="individual-tab">
-                                @foreach ($form->questions as $question)
-                                    <div class="container border border-dark rounded"
-                                        style="padding: 10px; margin: 10px; width: 66%;">
-                                        <h5 class="card-title">{{ $question->name }}</h5>
-                                    </div>
-                                @endforeach
                             </div> --}}
+                            <div class="tab-pane fade active" id="individual" role="tabpanel" aria-labelledby="individual-tab">
+                                <div>
+                                    {{ $responses->links() }}
+                                </div>
+                                @foreach ($responses as $response)
+                                    {{ $response->id }}
+                                    <div class="bg-white rounded shadow-sm p-4 question-box title-box">
+                                        <div class="form-group">
+                                            <h2><strong>{{ $form->name }}</strong></h2>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <p>{{ $form->description }}</p>
+                                        </div>
+                                    </div>
+
+                                    @foreach ($form->questions as $question)
+
+                                        @php
+                                            $answer = $question->answers;
+                                            $answer = $answer->where('response_id',$response->id)[$responses->currentPage()-1]->answer? $answer->where('response_id',$response->id)[$responses->currentPage()-1]->answer : [""] ;
+                                        @endphp
+                                        @if($question->type==1 || $question->type==2)
+                                        <div class="bg-white rounded shadow-sm p-4 question-box">
+                                            <div class="form-group">
+                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
+                                                    <span style="color: red;">*</span>
+                                                @endif</strong></h4>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                               <p>@if($answer!==[""]) {{ $answer }} @endif</p>
+                                            </div>
+                                        </div>
+                                        @elseif($question->type==3)
+                                        <div class="bg-white rounded shadow-sm p-4 question-box">
+                                            <div class="form-group">
+                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
+                                                    <span style="color: red;">*</span>
+                                                @endif</strong></h4>
+                                            </div>
+                                            <br>
+                                            <div class="mcq-options">
+                                                @foreach ($question->options as $option)
+                                                    <div class="form-check">
+                                                        <input type="radio" class="form-check-input" value="{{ $option }}" @if($option==$answer) checked @endif disabled>
+                                                        <label class="form-check-label" style="color: inherit;">{{ $option }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        @elseif($question->type==4)
+                                        <div class="bg-white rounded shadow-sm p-4 question-box">
+                                            <div class="form-group">
+                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
+                                                    <span style="color: red;">*</span>
+                                                @endif</strong></h4>
+                                            </div>
+                                            <br>
+                                            <select class="form-control" disabled>
+                                            @foreach ($question->options as $option)
+                                                <option value="{{ $option }}" @if($option==$answer) selected @endif>{{ $option }}</option>
+                                            @endforeach
+                                            </select>
+                                        </div>
+                                        @elseif($question->type==5)
+                                        <div class="bg-white rounded shadow-sm p-4 question-box">
+                                            <div class="form-group">
+                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
+                                                    <span style="color: red;">*</span>
+                                                @endif</strong></h4>
+                                            </div>
+                                            <br>
+                                            <div>
+                                                @foreach ($question->options as $option)
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                        @if($answer!==[""])
+                                                        {{ in_array($option, (array)$answer) ? 'checked' : '' }}
+                                                        @endif
+                                                         value="{{ $option }}" disabled>
+                                                        <label class="form-check-label">{{ $option }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        @endif
+
+                                    @endforeach
+                                @endforeach
+
+
+
+                            </div>
                         </div>
 
                     </div>
@@ -229,14 +292,14 @@
             </div>
             <div class="col-md-4">
                 <!-- Share Form Link -->
-                <div class="card">
+                <div class="card" >
                     <div class="card-header">
                         Share Form
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: #fff0ff">
                         <p>Share this link with others:</p>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" value="{{ route('form.getResponse', $form->id) }}"
+                            <input type="text" class="form-control" value="{{ route('form.getResponse', $form->id) }}" style="background-color: #fff5ff"
                                 readonly>
                             <div class="input-group-append">
                                 <button @if ($form->published == 0) disabled @endif class="btn btn-outline-secondary"
@@ -283,6 +346,7 @@
                         window.location.href = "/form/{{ $form->id }}/responses";
                     },
                     error: function(xhr, status, error) {
+                        window.location.href = "/form/{{ $form->id }}/responses";
                         console.error('Error:', error);
                         // Handle the error
                     }
@@ -290,6 +354,31 @@
             });
         });
     </script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check for a saved tab in localStorage
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                var tabElement = document.querySelector('#' + activeTab + '-tab');
+                var paneElement = document.querySelector('#' + activeTab);
+                if (tabElement && paneElement) {
+                    // Activate the saved tab
+                    tabElement.classList.add('active');
+                    tabElement.setAttribute('aria-selected', 'true');
+                    paneElement.classList.add('show', 'active');
+                }
+            }
+            var summaryTab = document.querySelector('#summary-tab')
+            summaryTab.classList.remove('active');
+            document.querySelector('#summary').classList.remove('active');
+            // Store the active tab in localStorage on tab change
+            var tabLinks = document.querySelectorAll('.nav-link');
+            tabLinks.forEach(function (tab) {
+                tab.addEventListener('click', function (e) {
+                    localStorage.setItem('activeTab', e.target.id.replace('-tab', ''));
+                });
+            });
+        });
+    </script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 @endsection

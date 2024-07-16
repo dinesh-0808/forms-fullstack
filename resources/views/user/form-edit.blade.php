@@ -40,7 +40,7 @@
         @foreach ($form->questions as $question)
 
             @if($question->type==1)
-            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box1{{ $loop->iteration }}" question-box="1{{ $loop->iteration }}" >
+            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box6{{ $loop->iteration }}" question-box="6{{ $loop->iteration }}" >
                 <div class="shortText">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
@@ -58,10 +58,10 @@
                     </div>
                     <hr>
 
-                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton1{{ $loop->iteration }}" deleteButton="1{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
-                        <i class="fa-solid fa-trash" deleteButton="1{{ $loop->iteration }}"></i>
+                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton6{{ $loop->iteration }}" deleteButton="6{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
+                        <i class="fa-solid fa-trash" deleteButton="6{{ $loop->iteration }}"></i>
                     </button>
-                    <div class="toggle-container" toggleButton="1{{ $loop->iteration }}">
+                    <div class="toggle-container" toggleButton="6{{ $loop->iteration }}">
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
                                     <input type="checkbox" class="toggleButton">
@@ -71,7 +71,7 @@
                 </div>
             </div>
             @elseif ($question->type==2)
-            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box2{{ $loop->iteration }}" question-box="2{{ $loop->iteration }}" >
+            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box7{{ $loop->iteration }}" question-box="7{{ $loop->iteration }}" >
                 <div class="longText">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
@@ -89,10 +89,10 @@
                     </div>
                     <hr>
 
-                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton2{{ $loop->iteration }}" deleteButton="2{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
-                        <i class="fa-solid fa-trash" deleteButton="2{{ $loop->iteration }}"></i>
+                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton7{{ $loop->iteration }}" deleteButton="7{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
+                        <i class="fa-solid fa-trash" deleteButton="7{{ $loop->iteration }}"></i>
                     </button>
-                    <div class="toggle-container" toggleButton="2{{ $loop->iteration }}">
+                    <div class="toggle-container" toggleButton="7{{ $loop->iteration }}">
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
                                     <input type="checkbox" class="toggleButton">
@@ -102,8 +102,8 @@
                 </div>
             </div>
             @elseif ($question->type == 3)
-            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box3{{ $loop->iteration }}" question-box="3{{ $loop->iteration }}"  >
-                <div class="MultipleChoice">
+            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box8{{ $loop->iteration }}" question-box="8{{ $loop->iteration }}"  >
+                <div class="multipleChoice">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
                         <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
@@ -115,21 +115,21 @@
                         </select>
                     </div>
                     <br>
-                    <div id="mcq-options{{ $loop->iteration }}">
+                    <div id="mcq-options8{{ $loop->iteration }}">
                         @foreach ($question->options as $option)
-                        <div class="form-check" id="MultipleChoiceBox{{ $loop->iteration }}">
+                        <div class="form-check" id="MultipleChoiceBox8{{ $loop->iteration }}">
                             <input type="radio" class="form-check-input" name="mcq" id="mcqOption{{ $loop->parent->iteration }}{{ $loop->iteration }}" value={{ $option }} disabled=true>
                             <label class="form-check-label" for="mcqOption{{ $loop->iteration }}"><input type="text" class='form-control' value="{{ $option }}"></label>
                         </div>
                             @endforeach
                     </div>
-                    <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton{{ $loop->iteration }}" mcqOptionsButton="{{ $loop->iteration }}" onclick="addMultipleChoiceOptionButton(event)"><i class="fa-solid fa-plus" mcqOptionsButton="{{ $loop->iteration }}"></i></button>
+                    <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton8{{ $loop->iteration }}" mcqOptionsButton="8{{ $loop->iteration }}" onclick="addMultipleChoiceOptionButton(event)"><i class="fa-solid fa-plus" mcqOptionsButton="8{{ $loop->iteration }}"></i></button>
                     <hr>
 
-                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton3{{ $loop->iteration }}" deleteButton="3{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
-                        <i class="fa-solid fa-trash" deleteButton="3{{ $loop->iteration }}"></i>
+                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton8{{ $loop->iteration }}" deleteButton="8{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
+                        <i class="fa-solid fa-trash" deleteButton="8{{ $loop->iteration }}"></i>
                     </button>
-                    <div class="toggle-container" toggleButton="3{{ $loop->iteration }}">
+                    <div class="toggle-container" toggleButton="8{{ $loop->iteration }}">
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
                                     <input type="checkbox" class="toggleButton">
@@ -139,7 +139,7 @@
                 </div>
             </div>
             @elseif ($question->type==4)
-            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box4{{ $loop->iteration }}" question-box="4{{ $loop->iteration }}" >
+            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box9{{ $loop->iteration }}" question-box="9{{ $loop->iteration }}" >
                 <div class="dropDown">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
@@ -154,19 +154,19 @@
                     <br>
                     <div class="form-group">
                         @foreach ($question->options as $option)
-                        <div class="form-control" id="dropdownQuestion{{ $loop->iteration }}">
+                        <div class="form-control" id="dropdownQuestion9{{ $loop->iteration }}">
                             <p id="dropdownBox{{ $loop->parent->iteration }}{{ $loop->iteration }}"><input type="text" width="50" class='form-control dropdownOptions' value="{{ $option }}" width="10px"></p>
 
                         </div>
-                        <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton${{ $loop->iteration }}" dropdownOptionsButton="{{ $loop->iteration }}" onclick="addDropdownOptionButton(event)"><i class="fa-solid fa-plus" dropdownOptionsButton="{{ $loop->iteration }}"></i></button>
+                        <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton9{{ $loop->iteration }}" dropdownOptionsButton="9{{ $loop->iteration }}" onclick="addDropdownOptionButton(event)"><i class="fa-solid fa-plus" dropdownOptionsButton="9{{ $loop->iteration }}"></i></button>
                         @endforeach
                     </div>
                     <hr>
 
-                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton4{{ $loop->iteration }}" deleteButton="4{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
-                        <i class="fa-solid fa-trash" deleteButton="4{{ $loop->iteration }}"></i>
+                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton9{{ $loop->iteration }}" deleteButton="9{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
+                        <i class="fa-solid fa-trash" deleteButton="9{{ $loop->iteration }}"></i>
                     </button>
-                    <div class="toggle-container" toggleButton="4{{ $loop->iteration }}">
+                    <div class="toggle-container" toggleButton="9{{ $loop->iteration }}">
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
                                     <input type="checkbox" class="toggleButton">
@@ -176,8 +176,8 @@
                 </div>
             </div>
             @elseif ($question->type == 5)
-            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box5{{ $loop->iteration }}" question-box="5{{ $loop->iteration }}" >
-                <div class="dropDown">
+            <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box10{{ $loop->iteration }}" question-box="10{{ $loop->iteration }}" >
+                <div class="CheckBox">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
                         <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
@@ -189,7 +189,7 @@
                         </select>
                     </div>
                     <br>
-                    <div id="checkbox-options{{ $loop->iteration }}">
+                    <div id="checkbox-options10{{ $loop->iteration }}">
                         @foreach ($question->options as $option)
                         <div class="form-check" id="checkboxBox{{ $loop->parent->iteration }}{{ $loop->iteration }}">
                             <input class="form-check-input" type="checkbox" id="checkboxOption{{ $loop->iteration }}" name="checkbox" value="{{ $option }}" disabled=true>
@@ -197,13 +197,13 @@
                         </div>
                         @endforeach
                     </div>
-                    <button type="button" class="btn btn-secondary mt-2 addButton" id="checkboxOptionsButton{{ $loop->iteration }}" checkboxOptionsButton="{{ $loop->iteration }}" onclick="addCheckBoxOptionButton(event)"><i class="fa-solid fa-plus" checkboxOptionsButton="{{ $loop->iteration }}"></i></button>
+                    <button type="button" class="btn btn-secondary mt-2 addButton" id="checkboxOptionsButton10{{ $loop->iteration }}" checkboxOptionsButton="10{{ $loop->iteration }}" onclick="addCheckBoxOptionButton(event)"><i class="fa-solid fa-plus" checkboxOptionsButton="10{{ $loop->iteration }}"></i></button>
                     <hr>
 
-                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton5{{ $loop->iteration }}" deleteButton="5{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
-                        <i class="fa-solid fa-trash" deleteButton="5{{ $loop->iteration }}"></i>
+                    <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton10{{ $loop->iteration }}" deleteButton="10{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
+                        <i class="fa-solid fa-trash" deleteButton="10{{ $loop->iteration }}"></i>
                     </button>
-                    <div class="toggle-container" toggleButton="5{{ $loop->iteration }}">
+                    <div class="toggle-container" toggleButton="10{{ $loop->iteration }}">
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
                                     <input type="checkbox" class="toggleButton">

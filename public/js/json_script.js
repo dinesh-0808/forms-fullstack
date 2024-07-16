@@ -60,7 +60,7 @@ function editFormDataToLaravel() {
         body: JSON.stringify(formData),
     })
         .then((response) => {
-            // window.location.href = "/home";
+            window.location.href = "/home";
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -99,9 +99,9 @@ function createJsonForm() {
     }
 
     children = formContainer.children;
-
     for (let i = 0; i < children.length; i++) {
         let child = children[i];
+        console.log(child);
         if (child.tagName.toLowerCase() === "div") {
             // Create a new div for each question in the preview
             let questionType = child.className;
@@ -201,6 +201,6 @@ function createJsonForm() {
             }
         }
     }
-    // console.log(formData.id);
+    // console.log(formData);
     return formData;
 }

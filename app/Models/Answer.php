@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Question;
 class Answer extends Model
 {
     use HasFactory;
@@ -18,4 +18,8 @@ class Answer extends Model
     protected $casts = [
         'answer' => 'array'
     ];
+
+    public function question(){
+        return $this->belongsTo(Question::class);
+    }
 }

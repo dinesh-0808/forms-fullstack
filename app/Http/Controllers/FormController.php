@@ -118,7 +118,7 @@ class FormController extends Controller
     public function update($id, Request $request){
         $user = Auth::user();
         $data = $request->json()->all();
-        dd("fkdjsdafkljdslkf",$data);
+        // dd("fkdjsdafkljdslkf",$data);
         // Log::info("logg info", $request->json()->all());
         $form = Form::findOrFail($id);
         $form->questions()->delete();
@@ -219,11 +219,11 @@ class FormController extends Controller
         $form = Form::findOrFail($id);
         if($form->published === 1){
             $form->published = 0;
-            session()->flash('not-accept-message','form not accepting responses');
+            // session()->flash('not-accept-message','form not accepting responses');
         }
         else {
             $form->published = 1;
-            session()->flash('accept-message','form accepting responses');
+            // session()->flash('accept-message','form accepting responses');
         }
         $form->save();
         $responses = $form->responses;
@@ -234,7 +234,7 @@ class FormController extends Controller
     {
         $user = Auth::user();
         $form = Form::findOrFail($id);
-        $responses = $form->responses;
+        $responses = $form->responses()->paginate(1);
         // $responses = $form->responses()->
         return view('user.responses', compact(['form','responses']));
     }

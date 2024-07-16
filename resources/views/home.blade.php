@@ -36,9 +36,9 @@
             </div>
 
             <div class="col-sm-9">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">User Forms</h6>
+                <div class="card shadow mb-4" >
+                    <div class="card-header py-3" style="background-color: #ffcaff">
+                        <h5 class="m-0 font-weight-bold" style="color: black">User Forms</h5>
                         <div class="card-body">
                             @if (count($forms) > 0)
                                 <div class="table-responsive">
