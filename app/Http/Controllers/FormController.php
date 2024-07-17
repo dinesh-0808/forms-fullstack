@@ -9,6 +9,7 @@ use App\Models\Question;
 use App\Models\Response;
 use App\Models\Answer;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response as FacadeResponse;
 
 class FormController extends Controller
 {
@@ -320,5 +321,47 @@ class FormController extends Controller
         }
 
         return view('user.form-submitted', compact('form'));
+    }
+
+    public function export($id)
+    {
+        $form = Form::findOrFail($id);
+        $questions = $form->questions;
+        $question_names = ["Sr no."];
+        foreach($questions as $question){
+            $question_names[] = $question->name;
+        }
+
+
+
+        $csvFileName = 'responses_' . date('Y-m-d_H-i-s') . '.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
+        ];
+        $handle = fopen('php://output', 'w');
+        fputcsv($handle, $question_names);
+
+        $responses = $form->responses;
+        $i = 1;
+        foreach($responses as $response){
+            $answers = [$i];
+            foreach($form->questions as $question){
+                $answer = [""];
+                if($question->answers->where('response_id',$response->id)->isNotEmpty() ){
+                    $answer = $question->answers->where('response_id',$response->id)->first()->answer;
+                }
+                // print_r($answer);
+                if(is_array($answer)){
+                    $answer = implode(', ', $answer);
+                }
+                $answers[] = $answer;
+            }
+            fputcsv($handle, $answers);
+            $i++;
+        }
+        fclose($handle);
+
+        return FacadeResponse::make('', 200, $headers);
     }
 }

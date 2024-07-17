@@ -10,11 +10,5 @@ class ResponseController extends Controller
 {
     //
 
-    public function index($id)
-    {
-        $user = Auth::user();
-        $response = Response::findOrFail($id);
 
-        return view('user.show-response', compact(['user', 'response']));
-    }
 }

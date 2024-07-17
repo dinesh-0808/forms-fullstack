@@ -14,4 +14,5 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/form/{id}', [FormController::class, 'destroy'])->name('form.destroy');
     Route::get('/form/{id}/edit',[FormController::class, 'edit'])->name('form.edit');
     Route::post('/form/{id}/update',[FormController::class, 'update'])->name('form.update');
+    Route::get('/form/{id}/response-export',[FormController::class, 'export'])->name('form.response.export');
 });

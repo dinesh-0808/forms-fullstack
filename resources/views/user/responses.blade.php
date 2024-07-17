@@ -88,6 +88,7 @@
                         Responses for Form: {{ $form->name }}
                         <h3>{{ count($form->responses) }} responses</h3>
                         <!-- Toggle Switch for Accepting Responses -->
+                        <a href="{{ route('form.response.export',$form->id) }}">Link to Sheets</a>
                         <form id="publishForm" action="{{ route('form.publish.toggle', $form->id) }}" method="POST">
                             @csrf
                             @method('POST')
