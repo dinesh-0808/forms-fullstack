@@ -120,7 +120,7 @@ function addQuestion(event){
             htmlcode = `
             <div class="multipleChoice">
             <div class="form-group header">
-                <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
+                <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
                 <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text">Long Text</option>
@@ -136,7 +136,7 @@ function addQuestion(event){
                     <label class="form-check-label" for="mcqOption1"><input type="text" class='form-control' value="option"></label>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton${MultipleCoiceBoxCount}" mcqOptionsButton="${MultipleCoiceBoxCount}" onclick="addMultipleChoiceOptionButton(event)"><i class="fa-solid fa-plus" mcqOptionsButton="${MultipleCoiceBoxCount}"></i></button>
+            <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton${MultipleCoiceBoxCount}" mcqOptionsButton="${MultipleCoiceBoxCount}" onclick="addMultipleChoiceOptionButton(event)">Add Option</button>
             <hr>
 
             <button type="button" class="btn btn-secondary mt-2 bottom-right" deleteButton="3${MultipleCoiceBoxCount}" onclick="deleteQuestionBox(event)">

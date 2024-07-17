@@ -14,7 +14,7 @@ function dropdownChangeButton(event) {
             console.log(div);
             div.innerHTML = `
             <div class="form-group header">
-                <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
+                <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
                 <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text" selected>Short Text</option>
                     <option value="long-text">Long Text</option>
@@ -49,7 +49,7 @@ function dropdownChangeButton(event) {
             div.setAttribute('class','longText');
             div.innerHTML = `
             <div class="form-group header">
-                <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
+                <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
                 <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text" selected>Long Text</option>
@@ -76,7 +76,7 @@ function dropdownChangeButton(event) {
             </div>
             `;
             break;
-        
+
         case "multiple-choice":
             MultipleCoiceBoxCount++;
             questionDiv.id = "question-box3" + MultipleCoiceBoxCount;
@@ -84,7 +84,7 @@ function dropdownChangeButton(event) {
             div.setAttribute('class','multipleChoice');
             div.innerHTML = `
             <div class="form-group header">
-                <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
+                <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
                 <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text">Long Text</option>
@@ -94,13 +94,13 @@ function dropdownChangeButton(event) {
                 </select>
             </div>
             <br>
-            <div id="mcq-options${MultipleCoiceBoxCount}">    
+            <div id="mcq-options${MultipleCoiceBoxCount}">
                 <div class="form-check" id="MultipleChoiceBox${MultipleCoiceBoxCount}1">
                     <input type="radio" class="form-check-input" name="mcq" id="mcqOption${MultipleCoiceBoxCount}1" value="option" disabled=true>
                     <label class="form-check-label" for="mcqOption1"><input type="text" class='form-control' value="option"></label>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton${MultipleCoiceBoxCount}" mcqOptionsButton="${MultipleCoiceBoxCount}" onclick="addMultipleChoiceOptionButton(event)"><i class="fa-solid fa-plus" mcqOptionsButton="${MultipleCoiceBoxCount}"></i></button>
+            <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton${MultipleCoiceBoxCount}" mcqOptionsButton="${MultipleCoiceBoxCount}" onclick="addMultipleChoiceOptionButton(event)">Add Option</button>
             <hr>
 
             <button type="button" class="btn btn-secondary mt-2 bottom-right" deleteButton="3${MultipleCoiceBoxCount}" onclick="deleteQuestionBox(event)">
@@ -115,7 +115,7 @@ function dropdownChangeButton(event) {
             </div>
             `;
             break;
-        
+
         case "dropdown":
             dropdownBoxCount++;
             questionDiv.id = "question-box4" + dropdownBoxCount;
@@ -123,7 +123,7 @@ function dropdownChangeButton(event) {
             div.setAttribute('class','dropDown');
             div.innerHTML = `
             <div class="form-group header">
-                <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
+                <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
                 <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text">Long Text</option>
@@ -133,11 +133,11 @@ function dropdownChangeButton(event) {
                 </select>
             </div>
             <br>
-            <div class="form-control" id="dropdownQuestion${dropdownBoxCount}">
+            <div class="form-check" id="dropdownQuestion${dropdownBoxCount}">
                 <p id="dropdownBox${dropdownBoxCount}1"><input type="text" width="50" class='form-control dropdownOptions' value="option" width="10px"></p>
-                
+
             </div>
-            <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton${dropdownBoxCount}" dropdownOptionsButton="${dropdownBoxCount}" onclick="addDropdownOptionButton(event)"><i class="fa-solid fa-plus" dropdownOptionsButton="${dropdownBoxCount}"></i></button>
+            <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton${dropdownBoxCount}" dropdownOptionsButton="${dropdownBoxCount}" onclick="addDropdownOptionButton(event)">Add Option</button>
             <hr>
 
             <button type="button" class="btn btn-secondary mt-2 bottom-right" deleteButton="4${dropdownBoxCount}"  onclick="deleteQuestionBox(event)">
@@ -152,7 +152,7 @@ function dropdownChangeButton(event) {
             </div>
             `;
             break;
-        
+
         case "checkboxes":
             checkboxBoxCount++;
             questionDiv.id = "question-box5" + checkboxBoxCount;
@@ -160,7 +160,7 @@ function dropdownChangeButton(event) {
             div.setAttribute('class','CheckBox');
             div.innerHTML = `
             <div class="form-group header">
-                <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
+                <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
                 <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text">Long Text</option>
@@ -176,7 +176,7 @@ function dropdownChangeButton(event) {
                     <label class="form-check-label" for="checkboxOption1"><input type="text" class='form-control' value="option"></label>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary mt-2 addButton" id="checkboxOptionsButton${checkboxBoxCount}" checkboxOptionsButton="${checkboxBoxCount}" onclick="addCheckBoxOptionButton(event)"><i class="fa-solid fa-plus" checkboxOptionsButton="${checkboxBoxCount}"></i></button>
+            <button type="button" class="btn btn-secondary mt-2 addButton" id="checkboxOptionsButton${checkboxBoxCount}" checkboxOptionsButton="${checkboxBoxCount}" onclick="addCheckBoxOptionButton(event)">Add Option</button>
             <hr>
 
             <button type="button" class="btn btn-secondary mt-2 bottom-right" deleteButton="5${checkboxBoxCount}" onclick="deleteQuestionBox(event)">

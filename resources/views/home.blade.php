@@ -47,7 +47,7 @@
                                             <tr>
                                                 <th>Id</th>
                                                 <th>Title</th>
-                                                <th>Created At</th>
+                                                <th>Created</th>
                                                 <th>Published</th>
                                                 <th>Delete</th>
                                                 <th>Responses</th>
@@ -58,22 +58,20 @@
 
                                             @foreach ($forms as $form)
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td><a href="{{ route('form.edit',$form->id) }}">{{ $form->name }}</a></td>
+                                                    <td>{{ (($forms->perPage())*($forms->currentPage()-1)) + $loop->iteration }}</td>
+                                                    <td>
+                                                        @if($form->published === 0)
+                                                            <a href="{{ route('form.edit',$form->id) }}">{{ $form->name }}</a>
+                                                        @else
+                                                            {{ $form->name }}
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $form->created_at->diffForHumans() }}</td>
                                                     <td>
-
-                                                        {{-- <div class="toggle-container">
-                                                        <label class="toggle-switch">
-                                                            <input type="checkbox" class="toggleButton"
-                                                                @if ($form->published === 1) checked @endif disabled>
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </div> --}}
                                                         @if ($form->published === 1)
-                                                            published
+                                                            <h6 style="color: green">published</h6>
                                                         @else
-                                                            not published
+                                                        <h6 style="color: red">not published</h6>
                                                         @endif
 
                                                     </td>
@@ -89,10 +87,14 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('form.response', $form->id) }}">responses</a>
+                                                        <div style="text-align: center;"">
+                                                            <a class="btn btn-primary" href="{{ route('form.response', $form->id) }}">responses</a>
+                                                        </div>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('form.getResponse', $form->id) }}">preview</a>
+                                                        <div style="text-align: center;">
+                                                            <a style="background-color: rgb(199, 199, 199)"  class="btn " href="{{ route('form.getResponse', $form->id) }}"><i class="fa-solid fa-eye"></i></a>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -100,12 +102,14 @@
 
                                         </tbody>
                                     </table>
-                                @else
+                                    {{ $forms->links() }}
+                                    @else
                                     <div class="container" style="text-align: center">
                                         <h5>No forms yet</h5>
                                         <p>Create a Form to get started</p>
                                     </div>
-                            @endif
+                                    @endif
+
                         </div>
                     </div>
                 </div>
@@ -148,6 +152,7 @@
                         // Optionally, update UI or show a message
                     },
                     error: function(error) {
+                        window.location.href = "/home";
                         // Handle error response here (if needed)
                         console.error('Error deleting:', error);
                     }

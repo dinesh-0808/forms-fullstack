@@ -43,7 +43,7 @@
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box6{{ $loop->iteration }}" question-box="6{{ $loop->iteration }}" >
                 <div class="shortText">
                     <div class="form-group header">
-                        <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
+                        <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="question" value="{{ $question->name }}"></div>
                         <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text" selected>Short Text</option>
                             <option value="long-text">Long Text</option>
@@ -53,8 +53,8 @@
                         </select>
                     </div>
                     <br>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="write question here" disabled=true >
+                    <div class="form-group" style="margin-left: 20px">
+                        <input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="write answer here" disabled=true >
                     </div>
                     <hr>
 
@@ -74,7 +74,7 @@
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box7{{ $loop->iteration }}" question-box="7{{ $loop->iteration }}" >
                 <div class="longText">
                     <div class="form-group header">
-                        <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
+                        <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
                         <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text">Short Text</option>
                             <option value="long-text" selected>Long Text</option>
@@ -84,8 +84,8 @@
                         </select>
                     </div>
                     <br>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="write question here" disabled=true value="{{ $question->name }}">
+                    <div class="form-group" style="margin-left: 20px">
+                        <textarea class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Write answer here" disabled></textarea>
                     </div>
                     <hr>
 
@@ -105,7 +105,7 @@
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box8{{ $loop->iteration }}" question-box="8{{ $loop->iteration }}"  >
                 <div class="multipleChoice">
                     <div class="form-group header">
-                        <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
+                        <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
                         <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text">Short Text</option>
                             <option value="long-text">Long Text</option>
@@ -123,7 +123,7 @@
                         </div>
                             @endforeach
                     </div>
-                    <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton8{{ $loop->iteration }}" mcqOptionsButton="8{{ $loop->iteration }}" onclick="addMultipleChoiceOptionButton(event)"><i class="fa-solid fa-plus" mcqOptionsButton="8{{ $loop->iteration }}"></i></button>
+                    <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton8{{ $loop->iteration }}" mcqOptionsButton="8{{ $loop->iteration }}" onclick="addMultipleChoiceOptionButton(event)">Add Option</button>
                     <hr>
 
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton8{{ $loop->iteration }}" deleteButton="8{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
@@ -142,7 +142,7 @@
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box9{{ $loop->iteration }}" question-box="9{{ $loop->iteration }}" >
                 <div class="dropDown">
                     <div class="form-group header">
-                        <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
+                        <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
                         <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text">Short Text</option>
                             <option value="long-text">Long Text</option>
@@ -153,13 +153,12 @@
                     </div>
                     <br>
                     <div class="form-group">
-                        @foreach ($question->options as $option)
-                        <div class="form-control" id="dropdownQuestion9{{ $loop->iteration }}">
-                            <p id="dropdownBox{{ $loop->parent->iteration }}{{ $loop->iteration }}"><input type="text" width="50" class='form-control dropdownOptions' value="{{ $option }}" width="10px"></p>
-
+                        <div class="form-check" id="dropdownQuestion9{{ $loop->iteration }}">
+                            @foreach ($question->options as $option)
+                            <p id="dropdownBox{{ $loop->parent->iteration }}{{ $loop->iteration }}"><input type="text" width="50" class='form-control dropdownOptions' value="{{ $option }}" width="100px"></p>
+                            @endforeach
                         </div>
-                        <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton9{{ $loop->iteration }}" dropdownOptionsButton="9{{ $loop->iteration }}" onclick="addDropdownOptionButton(event)"><i class="fa-solid fa-plus" dropdownOptionsButton="9{{ $loop->iteration }}"></i></button>
-                        @endforeach
+                        <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton9{{ $loop->iteration }}" dropdownOptionsButton="9{{ $loop->iteration }}" onclick="addDropdownOptionButton(event)">Add Option</button>
                     </div>
                     <hr>
 
@@ -179,7 +178,7 @@
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box10{{ $loop->iteration }}" question-box="10{{ $loop->iteration }}" >
                 <div class="CheckBox">
                     <div class="form-group header">
-                        <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
+                        <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
                         <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text">Short Text</option>
                             <option value="long-text">Long Text</option>
@@ -197,7 +196,7 @@
                         </div>
                         @endforeach
                     </div>
-                    <button type="button" class="btn btn-secondary mt-2 addButton" id="checkboxOptionsButton10{{ $loop->iteration }}" checkboxOptionsButton="10{{ $loop->iteration }}" onclick="addCheckBoxOptionButton(event)"><i class="fa-solid fa-plus" checkboxOptionsButton="10{{ $loop->iteration }}"></i></button>
+                    <button type="button" class="btn btn-secondary mt-2 addButton" id="checkboxOptionsButton10{{ $loop->iteration }}" checkboxOptionsButton="10{{ $loop->iteration }}" onclick="addCheckBoxOptionButton(event)">Add Option</button>
                     <hr>
 
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton10{{ $loop->iteration }}" deleteButton="10{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">

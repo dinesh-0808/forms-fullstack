@@ -120,14 +120,119 @@
                     </div>
                     <div class="card-body" style="background-color: #fff0ff">
                         <div class="tab-content" id="myTabContent"
-                            style="display: flex;
-                            justify-content: center; /* Centers content horizontally */
-                            ">
+                            style="display: flex; justify-content: center; /* Centers content horizontally */
+                            "
+                            >
+                            <div class="tab-pane fade active" id="individual" role="tabpanel" aria-labelledby="individual-tab">
+                                <div>
+                                    {{ $responses->links() }}
+                                </div>
+                                @foreach ($responses as $response)
+                                    <div class="bg-white rounded shadow-sm p-4 question-box title-box"
+                                    style="padding: 10px; margin: 10px; width: 600px;">
+                                        <div class="form-group">
+                                            <h2><strong>{{ $form->name }}</strong></h2>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <p>{{ $form->description }}</p>
+                                        </div>
+                                    </div>
+
+                                    @foreach ($form->questions as $question)
+
+                                        @php
+
+                                            $answer = [""];
+                                            if($question->answers->where('response_id',$response->id)->isNotEmpty() ){
+                                            $answer = $question->answers->where('response_id',$response->id)->first()->answer;
+                                            }
+                                        @endphp
+                                        <div class="bg-white rounded shadow-sm p-4 question-box"
+                                        style="padding: 10px; margin: 10px; width: 600px;">
+                                        @if($question->type==1 || $question->type==2)
+
+                                            <div class="form-group">
+                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
+                                                    <span style="color: red;">*</span>
+                                                @endif</strong></h4>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                               <p>@if($answer!==[""]) {{ $answer }} @endif</p>
+                                            </div>
+
+                                        @elseif($question->type==3)
+
+                                            <div class="form-group">
+                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
+                                                    <span style="color: red;">*</span>
+                                                @endif</strong></h4>
+                                            </div>
+                                            <br>
+                                            <div class="mcq-options">
+                                                @foreach ($question->options as $option)
+                                                    <div class="form-check">
+                                                        <input type="radio" class="form-check-input" value="{{ $option }}" @if($option==$answer) checked @endif disabled>
+                                                        <label class="form-check-label" style="color: inherit;">{{ $option }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                        @elseif($question->type==4)
+
+                                            <div class="form-group">
+                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
+                                                    <span style="color: red;">*</span>
+                                                @endif</strong></h4>
+                                            </div>
+                                            <br>
+                                            <select class="form-control" disabled>
+                                                @if($answer == [""])
+                                                <option value="" disabled selected>Select an option</option>
+                                                @else
+                                                @foreach ($question->options as $option)
+                                                    <option value="{{ $option }}" @if($option==$answer) selected @endif>{{ $option }}</option>
+                                                @endforeach
+                                                @endif
+                                            </select>
+
+                                        @elseif($question->type==5)
+
+                                            <div class="form-group">
+                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
+                                                    <span style="color: red;">*</span>
+                                                @endif</strong></h4>
+                                            </div>
+                                            <br>
+                                            <div>
+                                                @foreach ($question->options as $option)
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                        @if($answer!==[""])
+                                                        {{ in_array($option, (array)$answer) ? 'checked' : '' }}
+                                                        @endif
+                                                         value="{{ $option }}" disabled>
+                                                        <label class="form-check-label">{{ $option }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                        @endif
+                                        </div>
+                                    @endforeach
+                                @endforeach
+
+
+
+                            </div>
                             <div class="tab-pane fade show" id="summary" role="tabpanel"
-                                aria-labelledby="summary-tab">
+                                aria-labelledby="summary-tab"
+
+                                >
                                 @foreach ($form->questions as $question)
-                                    <div class="container border border-dark rounded"
-                                        style="padding: 10px; margin: 10px; width: 96%;">
+                                    <div class="bg-white rounded shadow-sm p-4 question-box title-box"
+                                        style="padding: 10px; margin: 10px; width: 500px;">
                                         <h3 class="card-title">{{ $question->name }}</h3>
                                         <h6>{{ count($question->answers) }} responses</h6>
                                         @if (($question->type == 1 || $question->type == 2) && count($question->answers))
@@ -180,6 +285,7 @@
                                         @endif
                                     </div>
                                 @endforeach
+
                             </div>
 
                             {{-- <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
@@ -190,100 +296,7 @@
                                     </div>
                                 @endforeach
                             </div> --}}
-                            <div class="tab-pane fade active" id="individual" role="tabpanel" aria-labelledby="individual-tab">
-                                <div>
-                                    {{ $responses->links() }}
-                                </div>
-                                @foreach ($responses as $response)
-                                    {{ $response->id }}
-                                    <div class="bg-white rounded shadow-sm p-4 question-box title-box">
-                                        <div class="form-group">
-                                            <h2><strong>{{ $form->name }}</strong></h2>
-                                        </div>
-                                        <br>
-                                        <div class="form-group">
-                                            <p>{{ $form->description }}</p>
-                                        </div>
-                                    </div>
 
-                                    @foreach ($form->questions as $question)
-
-                                        @php
-                                            $answer = $question->answers;
-                                            $answer = $answer->where('response_id',$response->id)[$responses->currentPage()-1]->answer? $answer->where('response_id',$response->id)[$responses->currentPage()-1]->answer : [""] ;
-                                        @endphp
-                                        @if($question->type==1 || $question->type==2)
-                                        <div class="bg-white rounded shadow-sm p-4 question-box">
-                                            <div class="form-group">
-                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
-                                                    <span style="color: red;">*</span>
-                                                @endif</strong></h4>
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                               <p>@if($answer!==[""]) {{ $answer }} @endif</p>
-                                            </div>
-                                        </div>
-                                        @elseif($question->type==3)
-                                        <div class="bg-white rounded shadow-sm p-4 question-box">
-                                            <div class="form-group">
-                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
-                                                    <span style="color: red;">*</span>
-                                                @endif</strong></h4>
-                                            </div>
-                                            <br>
-                                            <div class="mcq-options">
-                                                @foreach ($question->options as $option)
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" value="{{ $option }}" @if($option==$answer) checked @endif disabled>
-                                                        <label class="form-check-label" style="color: inherit;">{{ $option }}</label>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        @elseif($question->type==4)
-                                        <div class="bg-white rounded shadow-sm p-4 question-box">
-                                            <div class="form-group">
-                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
-                                                    <span style="color: red;">*</span>
-                                                @endif</strong></h4>
-                                            </div>
-                                            <br>
-                                            <select class="form-control" disabled>
-                                            @foreach ($question->options as $option)
-                                                <option value="{{ $option }}" @if($option==$answer) selected @endif>{{ $option }}</option>
-                                            @endforeach
-                                            </select>
-                                        </div>
-                                        @elseif($question->type==5)
-                                        <div class="bg-white rounded shadow-sm p-4 question-box">
-                                            <div class="form-group">
-                                                <h4><strong>{{ $question->name }}@if ($question->required === 1)
-                                                    <span style="color: red;">*</span>
-                                                @endif</strong></h4>
-                                            </div>
-                                            <br>
-                                            <div>
-                                                @foreach ($question->options as $option)
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                        @if($answer!==[""])
-                                                        {{ in_array($option, (array)$answer) ? 'checked' : '' }}
-                                                        @endif
-                                                         value="{{ $option }}" disabled>
-                                                        <label class="form-check-label">{{ $option }}</label>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        @endif
-
-                                    @endforeach
-                                @endforeach
-
-
-
-                            </div>
                         </div>
 
                     </div>

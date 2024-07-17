@@ -16,5 +16,5 @@ function deleteQuestionBoxEdit(e){
     console.log(boxNo);
     var div = document.getElementById('question-box'+boxNo);
     console.log(div.parentNode);
-    div.parentNode.remove();
+    div.remove();
 }

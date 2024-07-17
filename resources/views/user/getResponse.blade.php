@@ -105,22 +105,6 @@
                                 </div>
                             </div>
                         @elseif ($question->type == 5)
-                            {{-- <div class="bg-white rounded shadow-sm p-4 question-box" question-box="{{ $loop->iteration }}">
-                    <div class="CheckBox">
-                        <div class="form-group">
-                            <h4><strong>{{ $question->name }}@if ($question->required === 1)<span style="color: red;">*</span>@endif</strong></h4>
-                        </div>
-                        <br>
-                        <div id="checkbox-options{{ $loop->iteration }}">
-                            @foreach ($question->options as $option)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="checkboxOption{{ $loop->parent->iteration }}{{ $loop->iteration }}" name="5{{ $loop->parent->iteration }}{{ $loop->iteration }}">
-                                <label class="form-check-label" for="checkboxOption{{ $loop->parent->iteration }}{{ $loop->iteration }}">{{ $option }}</label>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div> --}}
                             <div class="bg-white rounded shadow-sm p-4 question-box" question-box="{{ $loop->iteration }}">
                                 <div class="CheckBox">
                                     <div class="form-group">

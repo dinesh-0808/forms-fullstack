@@ -165,7 +165,7 @@ function createJsonForm() {
                 ).value;
 
                 let options = child.querySelectorAll(
-                    ".dropDown .form-control input"
+                    ".dropdownOptions"
                 );
                 let option_labels = [];
                 options.forEach((option) => {

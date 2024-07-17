@@ -9,7 +9,7 @@ class UserController extends Controller
     //
     public function index(){
         $user = Auth::user();
-        $forms = $user->forms;
+        $forms = $user->forms()->paginate(10);
 
         return view('home',compact(['user','forms']));
 

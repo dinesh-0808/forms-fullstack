@@ -17,6 +17,17 @@ body {
     position: relative;
 
 }
+
+.question-name {
+    height: 65px;
+    width: 275px;
+    margin-left: 23px;
+}
+
+.form-check-input {
+    margin-top: 10px;
+}
+
 .title-box {
     border-top: 5px solid rgb(103, 58, 183);
 }
@@ -145,17 +156,18 @@ body {
     color: #999;
     transition: color 0.3s;
     border-radius: 27px;
+    margin-top: 0px;
 }
 
 
 .dropdownOptions, text {
     display: inline;
-    width: 290px;
+    width: 273px;
 }
 
 
 .addButton {
-    position: absolute;
+    /* position: absolute; */
     bottom: 14px; /* Adjust as needed */
     right: 10px; /* Adjust as needed */
     background: none;
@@ -163,7 +175,7 @@ body {
     cursor: pointer;
     color: #999;
     transition: color 0.3s;
-    margin-right: 45px;
+    margin-left: 20px;
     border-radius: 27px;
 }
 

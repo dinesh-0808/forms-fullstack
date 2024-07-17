@@ -39,7 +39,7 @@
         <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box31" question-box="31">
             <div class="multipleChoice">
                 <div class="form-group header">
-                    <div class="question"><input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
+                    <div class="question"><input type="text"  class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
                     <select class="dropdown" dropdown="1" onchange="dropdownChangeButton(event)">
                         <option value="short-text">Short Text</option>
                         <option value="long-text">Long Text</option>
@@ -50,12 +50,12 @@
                 </div>
                 <br>
                 <div id="mcq-options1">
-                    <div class="form-check" id="MultipleChoiceBox11">
+                    <div class="form-check" id="MultipleChoiceBox11" style="margin-bottom: 6px">
                         <input type="radio" class="form-check-input" name="mcq" id="mcqOption11" value=" option" disabled=true>
                         <label class="form-check-label" for="mcqOption1"><input type="text" class='form-control' value="option"></label>
                     </div>
                 </div>
-                <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton1" mcqOptionsButton="1" onclick="addMultipleChoiceOptionButton(event)"><i class="fa-solid fa-plus" mcqOptionsButton="1"></i></button>
+                <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton1" mcqOptionsButton="1" onclick="addMultipleChoiceOptionButton(event)">Add Option</button>
                 <hr>
 
                 <button type="button" class="btn btn-secondary mt-2 bottom-right" deleteButton="31" onclick="deleteQuestionBox(event)">

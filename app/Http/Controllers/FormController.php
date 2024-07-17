@@ -26,7 +26,7 @@ class FormController extends Controller
         $user = Auth::user();
         $data = $request->json()->all();
         // Log::info("logg info", $request->json()->all());
-
+        // dd($request->json()->all());
         $title = $data[0]['title'];
         $description = $data[0]['description'];
         if (!$description) {
