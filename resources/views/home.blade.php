@@ -49,52 +49,47 @@
                                                 <th>Title</th>
                                                 <th>Created</th>
                                                 <th>Published</th>
-                                                <th>Delete</th>
-                                                <th>Responses</th>
-                                                <th>preview</th>
+                                                <th>Actions</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                             @foreach ($forms as $form)
                                                 <tr>
-                                                    <td>{{ (($forms->perPage())*($forms->currentPage()-1)) + $loop->iteration }}</td>
                                                     <td>
-                                                        @if($form->published === 0)
-                                                            <a href="{{ route('form.edit',$form->id) }}">{{ $form->name }}</a>
-                                                        @else
-                                                            {{ $form->name }}
-                                                        @endif
+                                                        {{ (($forms->perPage())*($forms->currentPage()-1)) + $loop->iteration }}
                                                     </td>
-                                                    <td>{{ $form->created_at->diffForHumans() }}</td>
+                                                    <td>
+                                                        {{ $form->name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $form->created_at->diffForHumans() }}
+                                                    </td>
                                                     <td>
                                                         @if ($form->published === 1)
                                                             <h6 style="color: green">published</h6>
                                                         @else
                                                         <h6 style="color: red">not published</h6>
                                                         @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($form->published==0)
+                                                            <a href="{{ route('form.edit',$form->id) }}" class="btn btn-secondary" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                        @endif
+                                                        @if($form->published==1)
+                                                        <a class="btn btn-secondary" href="{{ route('form.getResponse', $form->id) }}"  title="Preview"><i class="fa-solid fa-eye"></i></a>
+                                                        @endif
+                                                        <form action="{{ route('form.destroy', $form->id) }}" method="POST" class="delete-form" style="display: inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="deleteButton btn btn-danger"  title="Delete Form"><i class="fa-solid fa-trash"></i></button>
+                                                        </form>
 
-                                                    </td>
-                                                    <td>
-                                                        <div style="text-align: center;">
-                                                            <form action="{{ route('form.destroy', $form->id) }}"
-                                                                method="POST" id="delete-form">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <input type="submit" class="deleteButton btn btn-danger"
-                                                                    value="delete">
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div style="text-align: center;"">
-                                                            <a class="btn btn-primary" href="{{ route('form.response', $form->id) }}">responses</a>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div style="text-align: center;">
-                                                            <a style="background-color: rgb(199, 199, 199)"  class="btn " href="{{ route('form.getResponse', $form->id) }}"><i class="fa-solid fa-eye"></i></a>
-                                                        </div>
+                                                        <a class="btn btn-primary" href="{{ route('form.response', $form->id) }}" title="Responses"><i class="fa-solid fa-users"></i></i></a>
+
+
+
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -132,32 +127,37 @@
 </script> --}}
     <script>
         $(document).ready(function() {
-            $('.deleteButton').click(function(e) {
-                e.preventDefault(); // Prevent default form submission
+    // Intercept the form submission
+    $('.delete-form').on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
 
-                // Confirm deletion if needed
-                if (!confirm("Are you sure you want to delete this form?")) {
-                    return false;
-                }
+        if(!confirm("are you sure you want to delete this form?")){
+            return false;
+        }
 
-                // Perform AJAX request
-                $.ajax({
-                    url: $('#delete-form').attr('action'),
-                    type: 'POST',
-                    data: $('#delete-form').serialize(),
-                    success: function(response) {
-                        // Handle success response here (if needed)
-                        window.location.href = "/home";
-                        console.log('Deleted successfully.');
-                        // Optionally, update UI or show a message
-                    },
-                    error: function(error) {
-                        window.location.href = "/home";
-                        // Handle error response here (if needed)
-                        console.error('Error deleting:', error);
-                    }
-                });
-            });
+        var form = $(this);
+
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(),
+            success: function(response) {
+                // Handle success response here
+                window.location.href = "/home";
+                console.log('Deleted successfully.');
+                // Optionally, remove the deleted item from the DOM or show a message
+            },
+            error: function(error) {
+                window.location.href = "/home";
+                // Handle error response here
+                console.error('Error deleting:', error);
+            }
         });
+    });
+});
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
     </script>
 @endsection

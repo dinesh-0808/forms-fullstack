@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    @if ($form->published == 1)
+    @if ($form->accept_response == 1)
         <div class="container mt-5 custom-container">
             <form action="{{ route('form.saveResponse', $form->id) }}" method="POST">
                 @csrf

@@ -39,7 +39,6 @@ class FormController extends Controller
             'name' => $title,
             'user_id' => $user->id,
             'description' => $description,
-            'published' => true,
         ]);
         // dump($form);
         $form_id = $form->id;
@@ -213,20 +212,38 @@ class FormController extends Controller
         return view('home', compact(['user', 'forms']));
     }
 
-    public function toggle($id)
+    public function toggleAcceptResponse($id)
     {
         $user = Auth::user();
         $form = Form::findOrFail($id);
-        if($form->published === 1){
-            $form->published = 0;
+        if($form->accept_response === 1){
+            $form->accept_response = 0;
             // session()->flash('not-accept-message','form not accepting responses');
         }
         else {
-            $form->published = 1;
+            $form->accept_response = 1;
             // session()->flash('accept-message','form accepting responses');
         }
         $form->save();
         $responses = $form->responses;
+        return view('user.responses', compact(['user', 'form','responses']));
+    }
+
+    public function togglePublish($id)
+    {
+        $user = Auth::user();
+        $form = Form::findOrFail($id);
+        // if($form->accept_response === 1){
+        //     $form->accept_response = 0;
+        //     // session()->flash('not-accept-message','form not accepting responses');
+        // }
+        // else {
+        //     $form->accept_response = 1;
+        //     // session()->flash('accept-message','form accepting responses');
+        // }
+        $form->published = 1;
+        $form->save();
+        $responses = $form->responses()->paginate(1);
         return view('user.responses', compact(['user', 'form','responses']));
     }
 

@@ -7,7 +7,8 @@ use App\Http\Controllers\FormController;
 Route::middleware(['auth'])->group(function () {
     // Route::get('/create-form',[FormController::class,'index'])->name('form.index');
     Route::post('/create-form', [FormController::class, 'store'])->name('form.store');
-    Route::post('/form/{id}/publish/toggle', [FormController::class, 'toggle'])->name('form.publish.toggle');
+    Route::post('/form/{id}/publish/toggle', [FormController::class, 'toggleAcceptResponse'])->name('form.acceptResponse.toggle');
+    Route::get('/form/{id}/accept-response/toggle', [FormController::class, 'togglePublish'])->name('form.publish.toggle');
     Route::get('form/{id}/responses', [FormController::class, 'response'])->name('form.response');
     Route::get('/form/{id}', [FormController::class, 'getResponse'])->name('form.getResponse');
     Route::post('form/{id}', [FormController::class, 'saveResponse'])->name('form.saveResponse');

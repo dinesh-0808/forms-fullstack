@@ -77,11 +77,11 @@
 @endsection
 @section('content')
     <div class="container mt-4">
-        @if ($form->published == 0)
+        @if ($form->accept_response == 0 && $form->published==1)
             <div class="alert alert-danger">
                 <h4>form not accepting responses</h4>
             </div>
-        @else
+        @elseif ($form->accept_response == 1 && $form->published==1)
             <div class="alert alert-success">
                 <h4>form accepting responses</h4>
             </div>
@@ -96,22 +96,30 @@
                         Responses for Form: {{ $form->name }}
                         <h3>{{ count($form->responses) }} responses</h3>
                         <!-- Toggle Switch for Accepting Responses -->
+                        @if($form->published==1)
                         <div class="export-container">
                             <a class="btn btn-outline-success" href="{{ route('form.response.export',$form->id) }}"><i class="fa-regular fa-file-excel"></i> Response Sheet</a>
                         </div>
-                        <form id="publishForm" action="{{ route('form.publish.toggle', $form->id) }}" method="POST">
+                        <form id="publishForm" action="{{ route('form.acceptResponse.toggle', $form->id) }}" method="POST">
                             @csrf
                             @method('POST')
                             <div class="toggle-container">
                                 <span class="status">Accepting Responses</span>
                                 <label class="toggle-switch">
                                     <input type="checkbox" class="toggleButton"
-                                        @if ($form->published === 1) checked @endif>
+                                        @if ($form->accept_response === 1) checked @endif @if($form->published==0) disabled @endif>
                                     <span class="slider"></span>
                                 </label>
                             </div>
 
                         </form>
+                        @else
+                        <div class="export-container">
+                            <a class="btn btn-primary" href="{{ route('form.publish.toggle',$form->id) }}">Publish</a>
+                        </div>
+                        @endif
+
+
                         <br>
                         @if(count($form->responses)>0)
                         <ul class="nav nav-tabs card-header-tabs justify-content-center" id="myTab" role="tablist">
@@ -139,7 +147,7 @@
                             @if(count($form->responses)==0)
                                 <div class="bg-white rounded shadow-sm p-4 question-box title-box"
                             style="padding: 10px; margin: 10px; width: 600px;">
-                                    <h6 style="text-align: center">Waiting for responses</h6>
+                                    <h6 style="text-align: center">@if($form->published==0) Publish Form for Accepting Responses @else Waiting for responses @endif</h6>
                                 </div>
                             @endif
                             <div class="tab-pane fade active" id="individual" role="tabpanel" aria-labelledby="individual-tab">
@@ -333,7 +341,7 @@
                             <input type="text" class="form-control" value="{{ route('form.getResponse', $form->id) }}" style="background-color: #fff5ff"
                                 readonly>
                             <div class="input-group-append">
-                                <button @if ($form->published == 0) disabled @endif class="btn btn-outline-secondary"
+                                <button @if ($form->accept_response == 0) disabled @endif class="btn btn-outline-secondary"
                                     type="button" onclick="copyLink()">Copy</button>
                             </div>
                         </div>
