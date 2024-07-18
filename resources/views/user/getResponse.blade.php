@@ -76,6 +76,7 @@
                                                     name="3{{ $loop->parent->iteration }}"
                                                     id="mcqOption{{ $loop->parent->iteration }}{{ $loop->iteration }}"
                                                     value="{{ $option }}"
+                                                    style="position: relative; bottom: 4px"
                                                     @if ($question->required == 1) required @endif>
                                                 <label class="form-check-label"
                                                     for="mcqOption{{ $loop->parent->iteration }}">{{ $option }}</label>
@@ -120,6 +121,7 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox"
                                                     id="checkboxOption{{ $loop->parent->iteration }}{{ $loop->iteration }}"
+                                                    style="position: relative; bottom: 4px"
                                                     name="5{{ $loop->parent->iteration }}[]" value="{{ $option }}">
                                                 <label class="form-check-label"
                                                     for="checkboxOption{{ $loop->parent->iteration }}{{ $loop->iteration }}">{{ $option }}</label>

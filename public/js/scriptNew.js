@@ -24,7 +24,7 @@ function dropdownChangeButton(event) {
                 </select>
             </div>
             <br>
-            <div class="form-group">
+            <div class="form-group" style="margin-left: 20px">
                 <input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="write question here" disabled=true>
             </div>
             <hr>
@@ -59,7 +59,7 @@ function dropdownChangeButton(event) {
                 </select>
             </div>
             <br>
-            <div class="form-group">
+            <div class="form-group" style="margin-left: 20px">
                 <textarea class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Write question here" disabled></textarea>
             </div>
             <hr>
@@ -95,9 +95,9 @@ function dropdownChangeButton(event) {
             </div>
             <br>
             <div id="mcq-options${MultipleCoiceBoxCount}">
-                <div class="form-check" id="MultipleChoiceBox${MultipleCoiceBoxCount}1">
+                <div class="form-check" id="MultipleChoiceBox${MultipleCoiceBoxCount}1" style="margin-bottom: 6px">
                     <input type="radio" class="form-check-input" name="mcq" id="mcqOption${MultipleCoiceBoxCount}1" value="option" disabled=true>
-                    <label class="form-check-label" for="mcqOption1"><input type="text" class='form-control' value="option"></label>
+                    <label class="form-check-label" for="mcqOption1"><input type="text" class='form-control' value="option" ></label>
                 </div>
             </div>
             <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton${MultipleCoiceBoxCount}" mcqOptionsButton="${MultipleCoiceBoxCount}" onclick="addMultipleChoiceOptionButton(event)">Add Option</button>
@@ -133,7 +133,7 @@ function dropdownChangeButton(event) {
                 </select>
             </div>
             <br>
-            <div class="form-check" id="dropdownQuestion${dropdownBoxCount}">
+            <div class="form-check" id="dropdownQuestion${dropdownBoxCount}" >
                 <p id="dropdownBox${dropdownBoxCount}1"><input type="text" width="50" class='form-control dropdownOptions' value="option" width="10px"></p>
 
             </div>
@@ -200,3 +200,6 @@ function dropdownChangeButton(event) {
 
 
 }
+
+
+

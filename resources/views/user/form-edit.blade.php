@@ -63,8 +63,8 @@
                     </button>
                     <div class="toggle-container" toggleButton="6{{ $loop->iteration }}">
                                 <span class="status">Required</span>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" class="toggleButton">
+                                <label class="toggle-switch" checked>
+                                    <input type="checkbox" class="toggleButton" @if($question->required==1) checked @endif>
                                     <span class="slider"></span>
                                 </label>
                     </div>
@@ -95,7 +95,7 @@
                     <div class="toggle-container" toggleButton="7{{ $loop->iteration }}">
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" class="toggleButton">
+                                    <input type="checkbox" class="toggleButton" @if($question->required==1) checked @endif>
                                     <span class="slider"></span>
                                 </label>
                     </div>
@@ -117,9 +117,10 @@
                     <br>
                     <div id="mcq-options8{{ $loop->iteration }}">
                         @foreach ($question->options as $option)
-                        <div class="form-check" id="MultipleChoiceBox8{{ $loop->iteration }}">
-                            <input type="radio" class="form-check-input" name="mcq" id="mcqOption{{ $loop->parent->iteration }}{{ $loop->iteration }}" value={{ $option }} disabled=true>
+                        <div class="form-check" id="MultipleChoiceBox8{{ $loop->parent->iteration }}{{ $loop->iteration }}" MultipleChoiceBox="8{{ $loop->parent->iteration }}{{ $loop->iteration }}">
+                            <input type="radio" class="form-check-input" name="mcq" id="mcqOption{{ $loop->parent->iteration }}{{ $loop->iteration }}"  value={{ $option }} disabled=true>
                             <label class="form-check-label" for="mcqOption{{ $loop->iteration }}"><input type="text" class='form-control' value="{{ $option }}"></label>
+                            <button type="button" mcqOptionDeleteButton="8{{ $loop->parent->iteration }}{{ $loop->iteration }}" id="mcqOptionDeleteButton8{{ $loop->parent->iteration }}{{ $loop->iteration }}" class="btn btn-secondary mt-2 mcqOptionsDeleteButton optionsDeleteButton"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                             @endforeach
                     </div>
@@ -132,7 +133,7 @@
                     <div class="toggle-container" toggleButton="8{{ $loop->iteration }}">
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" class="toggleButton">
+                                    <input type="checkbox" class="toggleButton" @if($question->required==1) checked @endif>
                                     <span class="slider"></span>
                                 </label>
                     </div>
@@ -155,7 +156,10 @@
                     <div class="form-group">
                         <div class="form-check" id="dropdownQuestion9{{ $loop->iteration }}">
                             @foreach ($question->options as $option)
-                            <p id="dropdownBox{{ $loop->parent->iteration }}{{ $loop->iteration }}"><input type="text" width="50" class='form-control dropdownOptions' value="{{ $option }}" width="100px"></p>
+                            <p id="dropdownBox9{{ $loop->parent->iteration }}{{ $loop->iteration }}" dropdownBox="9{{ $loop->parent->iteration }}{{ $loop->iteration }}">
+                                <input type="text" width="50" class='form-control dropdownOptions' value="{{ $option }}" width="100px">
+                                <button type="button" dropdownOptionDeleteButton="9{{ $loop->parent->iteration }}{{ $loop->iteration }}" id="dropdownOptionDeleteButton9{{ $loop->parent->iteration }}{{ $loop->iteration }}" class="btn btn-secondary mt-2 dropdownOptionDeleteButton optionsDeleteButton"><i class="fa-solid fa-xmark"></i></button>
+                            </p>
                             @endforeach
                         </div>
                         <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton9{{ $loop->iteration }}" dropdownOptionsButton="9{{ $loop->iteration }}" onclick="addDropdownOptionButton(event)">Add Option</button>
@@ -168,7 +172,7 @@
                     <div class="toggle-container" toggleButton="9{{ $loop->iteration }}">
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" class="toggleButton">
+                                    <input type="checkbox" class="toggleButton" @if($question->required==1) checked @endif>
                                     <span class="slider"></span>
                                 </label>
                     </div>
@@ -190,9 +194,10 @@
                     <br>
                     <div id="checkbox-options10{{ $loop->iteration }}">
                         @foreach ($question->options as $option)
-                        <div class="form-check" id="checkboxBox{{ $loop->parent->iteration }}{{ $loop->iteration }}">
+                        <div class="form-check" id="checkboxBox10{{ $loop->parent->iteration }}{{ $loop->iteration }}" checkboxBox="10{{ $loop->parent->iteration }}{{ $loop->iteration }}">
                             <input class="form-check-input" type="checkbox" id="checkboxOption{{ $loop->iteration }}" name="checkbox" value="{{ $option }}" disabled=true>
                             <label class="form-check-label" for="checkboxOption{{ $loop->iteration }}"><input type="text" class='form-control' value="{{ $option }}"></label>
+                            <button type="button" checkboxOptionDeleteButton="10{{ $loop->parent->iteration }}{{ $loop->iteration }}" id="checkboxOptionDeleteButton10{{ $loop->parent->iteration }}{{ $loop->iteration }}" class="btn btn-secondary mt-2 checkboxOptionDeleteButton optionsDeleteButton"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                         @endforeach
                     </div>
@@ -202,10 +207,10 @@
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton10{{ $loop->iteration }}" deleteButton="10{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="10{{ $loop->iteration }}"></i>
                     </button>
-                    <div class="toggle-container" toggleButton="10{{ $loop->iteration }}">
+                    <div class="toggle-container" toggleButton="10{{ $loop->iteration }}" >
                                 <span class="status">Required</span>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" class="toggleButton">
+                                    <input type="checkbox" class="toggleButton" @if($question->required==1) checked @endif>
                                     <span class="slider"></span>
                                 </label>
                     </div>

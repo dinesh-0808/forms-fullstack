@@ -7,6 +7,32 @@ document.addEventListener('DOMContentLoaded',function(){
                 deleteQuestionBoxEdit(event);
             });
         });
+
+    const mcqOptDelButtons = document.querySelectorAll('div[MultipleChoiceBox]');
+
+    mcqOptDelButtons.forEach(div => {
+        div.addEventListener('click',function(event){
+            deleteMcqOption(event);
+        })
+    })
+
+    const dropdownOptDelButtons = document.querySelectorAll('p[dropdownBox]');
+
+    dropdownOptDelButtons.forEach(p => {
+        p.addEventListener('click',function(event){
+            deleteDropdownOption(event);
+        })
+
+    })
+
+    const checkboxOptDelButtons = document.querySelectorAll('div[checkboxBox]');
+
+    checkboxOptDelButtons.forEach(div => {
+        div.addEventListener('click',function(event){
+            deleteCheckboxOption(event);
+        })
+    })
+
 })
 
 
@@ -18,3 +44,9 @@ function deleteQuestionBoxEdit(e){
     console.log(div.parentNode);
     div.remove();
 }
+
+// function mcqOptDeleteButton(e){
+//     var string = e.target.tagName === 'I' ? e.target.parentElement.id : e.target.id;
+//     var boxNo = e.target.getAttribute('mcqOptionDeleteButton');
+
+// }

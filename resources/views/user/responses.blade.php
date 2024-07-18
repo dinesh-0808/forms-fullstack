@@ -64,6 +64,14 @@
             transform: translateX(15.6px);
         }
 
+        .export-container {
+            position: absolute;
+            right: 15px;
+            top: 43px;
+            display: flex;
+            align-items: center;
+            margin-top: -30px;
+        }
 
     </style>
 @endsection
@@ -88,7 +96,9 @@
                         Responses for Form: {{ $form->name }}
                         <h3>{{ count($form->responses) }} responses</h3>
                         <!-- Toggle Switch for Accepting Responses -->
-                        <a href="{{ route('form.response.export',$form->id) }}">Link to Sheets</a>
+                        <div class="export-container">
+                            <a class="btn btn-outline-success" href="{{ route('form.response.export',$form->id) }}"><i class="fa-regular fa-file-excel"></i> Response Sheet</a>
+                        </div>
                         <form id="publishForm" action="{{ route('form.publish.toggle', $form->id) }}" method="POST">
                             @csrf
                             @method('POST')
@@ -103,6 +113,7 @@
 
                         </form>
                         <br>
+                        @if(count($form->responses)>0)
                         <ul class="nav nav-tabs card-header-tabs justify-content-center" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="individual-tab" data-toggle="tab" href="#individual" role="tab"
@@ -118,12 +129,19 @@
                             </li> --}}
 
                         </ul>
+                        @endif
                     </div>
                     <div class="card-body" style="background-color: #fff0ff">
                         <div class="tab-content" id="myTabContent"
-                            style="display: flex; justify-content: center; /* Centers content horizontally */
+                        style="display: flex; justify-content: center; /* Centers content horizontally */
                             "
                             >
+                            @if(count($form->responses)==0)
+                                <div class="bg-white rounded shadow-sm p-4 question-box title-box"
+                            style="padding: 10px; margin: 10px; width: 600px;">
+                                    <h6 style="text-align: center">Waiting for responses</h6>
+                                </div>
+                            @endif
                             <div class="tab-pane fade active" id="individual" role="tabpanel" aria-labelledby="individual-tab">
                                 <div>
                                     {{ $responses->links() }}
@@ -228,9 +246,8 @@
 
                             </div>
                             <div class="tab-pane fade show" id="summary" role="tabpanel"
-                                aria-labelledby="summary-tab"
-
-                                >
+                                aria-labelledby="summary-tab">
+                                @if(count($form->responses)>0)
                                 @foreach ($form->questions as $question)
                                     <div class="bg-white rounded shadow-sm p-4 question-box title-box"
                                         style="padding: 10px; margin: 10px; width: 500px;">
@@ -286,7 +303,7 @@
                                         @endif
                                     </div>
                                 @endforeach
-
+                                @endif
                             </div>
 
                             {{-- <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">

@@ -118,9 +118,8 @@ class FormController extends Controller
 
     public function update($id, Request $request){
         $user = Auth::user();
-        $data = $request->json()->all();
-        // dd("fkdjsdafkljdslkf",$data);
-        // Log::info("logg info", $request->json()->all());
+        $data = $request->all();
+
         $form = Form::findOrFail($id);
         $form->questions()->delete();
         // dump($data[1]['title']);
@@ -301,7 +300,7 @@ class FormController extends Controller
                     ]);
                 }
             } else if ($question->type == 5) {
-                if(isset($request["5" . $i])){
+                if(isset($request["1_5" . $i])){
                     $optionsChecked = [];
                     $j = 0;
                     foreach ($request["5" . $i] as $opt) {
