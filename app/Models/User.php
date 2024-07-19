@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Form;
+use App\Models\Response;
 
 class User extends Authenticatable
 {
@@ -48,4 +49,5 @@ class User extends Authenticatable
     public function forms(){
         return $this->hasMany(Form::class);
     }
+
 }

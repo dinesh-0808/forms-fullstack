@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label for="1{{ $loop->iteration }}"></label>
                                     <input type="text" name="1{{ $loop->iteration }}"class="form-control"
-                                        id="inputHeader" aria-describedby="headerHelp" placeholder="write question here"
+                                        id="inputHeader" aria-describedby="headerHelp" placeholder="write answer here"
                                         @if ($question->required == 1) required @endif>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="2{{ $loop->iteration }}"></label>
                                     <textarea class="form-control" id="inputHeader" name="2{{ $loop->iteration }}" aria-describedby="headerHelp"
-                                        placeholder="Write question here" @if ($question->required == 1) required @endif></textarea>
+                                        placeholder="Write answer here" @if ($question->required == 1) required @endif></textarea>
                                 </div>
                             </div>
                         @elseif ($question->type == 3)

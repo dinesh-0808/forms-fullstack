@@ -1,3 +1,5 @@
+
+
 if(document.getElementById("form-submit")){
 
         document
@@ -13,9 +15,8 @@ if(document.getElementById("form-submit")){
     }
 
 
-
-
 function sendFormDataToLaravel() {
+
     let formData = createJsonForm();
     let csrf = document
         .querySelector('meta[name="csrf-token"]')
@@ -32,7 +33,17 @@ function sendFormDataToLaravel() {
         body: JSON.stringify(formData),
     })
         .then((response) => {
-            window.location.href = "/home";
+            Swal.fire({
+                title: 'Success!',
+                text: 'Form saved successfully.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/home";
+                }
+            });
+
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -60,7 +71,16 @@ function editFormDataToLaravel() {
         body: JSON.stringify(formData),
     })
         .then((response) => {
-            window.location.href = "/home";
+            Swal.fire({
+                title: 'Success!',
+                text: 'Form edited successfully.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/home";
+                }
+            });
         })
         .catch((error) => {
             console.error("Error:", error);

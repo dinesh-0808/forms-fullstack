@@ -29,18 +29,26 @@ class FormController extends Controller
         // Log::info("logg info", $request->json()->all());
         // dd($request->json()->all());
         $title = $data[0]['title'];
-        $description = $data[0]['description'];
-        if (!$description) {
-            $description = "";
+        $desc = $data[0]['description'];
+        if (!$desc) {
+            $desc = "";
         }
-        // dump($title, $description);
-
+        // dd($title, $description);
+        // $form = new Form();
+        // $form->name = $title;
+        // $form->user_id = $user->id;
+        // $form->description = $;
+        // $form->published = false;
+        // $form->accept_response = false;
+        // $form->save();
         $form = Form::create([
             'name' => $title,
             'user_id' => $user->id,
-            'description' => $description,
+            'description' => $desc,
+            'published' => false,
+            'accept_response' => false
         ]);
-        // dump($form);
+        // echo($form->id);
         $form_id = $form->id;
 
         for ($i = 1; $i < count($data); $i++) {
@@ -317,7 +325,7 @@ class FormController extends Controller
                     ]);
                 }
             } else if ($question->type == 5) {
-                if(isset($request["1_5" . $i])){
+                if(isset($request["5" . $i])){
                     $optionsChecked = [];
                     $j = 0;
                     foreach ($request["5" . $i] as $opt) {
@@ -343,7 +351,7 @@ class FormController extends Controller
     {
         $form = Form::findOrFail($id);
         $questions = $form->questions;
-        $question_names = ["Sr no."];
+        $question_names = ["Sr no.","Sender emailId"];
         foreach($questions as $question){
             $question_names[] = $question->name;
         }
@@ -361,7 +369,7 @@ class FormController extends Controller
         $responses = $form->responses;
         $i = 1;
         foreach($responses as $response){
-            $answers = [$i];
+            $answers = [$i,$response->user->email];
             foreach($form->questions as $question){
                 $answer = [""];
                 if($question->answers->where('response_id',$response->id)->isNotEmpty() ){

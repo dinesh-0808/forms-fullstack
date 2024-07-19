@@ -9,7 +9,8 @@ class UserController extends Controller
     //
     public function index(){
         $user = Auth::user();
-        $forms = $user->forms()->paginate(10);
+        $forms = $user->forms()->orderBy('id', 'desc')->paginate(10);
+
 
         return view('home',compact(['user','forms']));
 

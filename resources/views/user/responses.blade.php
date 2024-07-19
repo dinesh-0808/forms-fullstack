@@ -164,6 +164,9 @@
                                         <div class="form-group">
                                             <p>{{ $form->description }}</p>
                                         </div>
+                                        <div class="form-group">
+                                             {{ $response->user->email; }}
+                                        </div>
                                     </div>
 
                                     @foreach ($form->questions as $question)
@@ -263,8 +266,8 @@
                                         <h6>{{ count($question->answers) }} responses</h6>
                                         @if (($question->type == 1 || $question->type == 2) && count($question->answers))
                                             @foreach ($question->answers as $answer)
-                                                <div class="container rounded" style="border: 1px solid #ccc;">
-                                                    <p>{{ $answer->answer }}</p>
+                                                <div class="container rounded" style="border: 1px solid #ffffff; margin-bottom: 5px; background-color: rgb(224, 222, 222)">
+                                                    <p style="margin: 5px 0;">{{ $answer->answer }}</p>
                                                 </div>
                                             @endforeach
                                         @elseif (($question->type == 3 || $question->type == 4) && count($question->answers))

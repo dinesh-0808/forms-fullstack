@@ -16,6 +16,7 @@ class Form extends Model
         'name',
         'description',
         'published',
+        'accept_response'
     ];
 
 

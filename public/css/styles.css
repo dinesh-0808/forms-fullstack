@@ -5,11 +5,11 @@ body {
 .custom-container {
     width: 750px; /* Set width to 50% */
 
-    margin: 0 auto;
+    /* margin-top: 0px; */
 }
 
 .question-box {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     margin-top: 0px;
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
@@ -114,18 +114,18 @@ body {
 
 
 /* trial purpose  */
- /* .floating-bar {
+ .floating-bar {
     position: fixed;
     top: 50%;
     right: 370px;
     transform: translateY(-50%);
     z-index: 1000;
-} */
-.floating-bar {
+}
+/* .floating-bar {
     position: fixed;
     right: 20px;
     bottom: 20px;
-}
+} */
 /* .floating-button {
     background-color: #007bff;
     color: white;

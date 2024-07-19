@@ -31,7 +31,7 @@ function generatePreviewHTML(){
         }
 
         .question-box {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .title-box {
             border-top: 5px solid rgb(103, 58, 183);
