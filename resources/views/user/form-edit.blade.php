@@ -114,7 +114,7 @@
                         <input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="write answer here" disabled=true >
                     </div>
                     <hr>
-
+                    <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton6{{ $loop->iteration }}" deleteButton="6{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="6{{ $loop->iteration }}"></i>
                     </button>
@@ -145,6 +145,7 @@
                         <textarea class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Write answer here" disabled></textarea>
                     </div>
                     <hr>
+                    <input type="hidden" name="question_id" value="{{ $question->id }}">
 
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton7{{ $loop->iteration }}" deleteButton="7{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="7{{ $loop->iteration }}"></i>
@@ -183,7 +184,7 @@
                     </div>
                     <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton8{{ $loop->iteration }}" mcqOptionsButton="8{{ $loop->iteration }}" onclick="addMultipleChoiceOptionButton(event)">Add Option</button>
                     <hr>
-
+                    <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton8{{ $loop->iteration }}" deleteButton="8{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="8{{ $loop->iteration }}"></i>
                     </button>
@@ -222,7 +223,7 @@
                         <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton9{{ $loop->iteration }}" dropdownOptionsButton="9{{ $loop->iteration }}" onclick="addDropdownOptionButton(event)">Add Option</button>
                     </div>
                     <hr>
-
+                    <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton9{{ $loop->iteration }}" deleteButton="9{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="9{{ $loop->iteration }}"></i>
                     </button>
@@ -260,7 +261,7 @@
                     </div>
                     <button type="button" class="btn btn-secondary mt-2 addButton" id="checkboxOptionsButton10{{ $loop->iteration }}" checkboxOptionsButton="10{{ $loop->iteration }}" onclick="addCheckBoxOptionButton(event)">Add Option</button>
                     <hr>
-
+                    <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton10{{ $loop->iteration }}" deleteButton="10{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="10{{ $loop->iteration }}"></i>
                     </button>

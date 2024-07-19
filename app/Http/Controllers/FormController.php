@@ -33,14 +33,6 @@ class FormController extends Controller
         if (!$desc) {
             $desc = "";
         }
-        // dd($title, $description);
-        // $form = new Form();
-        // $form->name = $title;
-        // $form->user_id = $user->id;
-        // $form->description = $;
-        // $form->published = false;
-        // $form->accept_response = false;
-        // $form->save();
         $form = Form::create([
             'name' => $title,
             'user_id' => $user->id,
@@ -140,68 +132,34 @@ class FormController extends Controller
         $form_id = $form->id;
         $form->name = $title;
         $form->description = $description;
+        $form->save();
         // dd($form);
         for ($i = 2; $i < count($data); $i++) {
-            if ($data[$i]['question_type'] === 'short_text') {
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 1,
-                    'name' => $data[$i]['question_text'],
-                    'options' => [],
-                    'required' => $data[$i]['required'],
-                ]);
-                // dump($question);
-            } else if ($data[$i]['question_type'] === 'long_text') {
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 2,
-                    'name' => $data[$i]['question_text'],
-                    'options' => [],
-                    'required' => $data[$i]['required'],
-                ]);
-                // dump($question);
-            } else if ($data[$i]['question_type'] === 'multiple-choice') {
-                $options = [];
-                foreach ($data[$i]['options'] as $option) {
-                    array_push($options, $option);
-                }
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 3,
-                    'name' => $data[$i]['question_text'],
-                    'options' => $options,
-                    'required' => $data[$i]['required'],
-                ]);
-                // dump($question);
-            } else if ($data[$i]['question_type'] === 'drop-down') {
-                $options = [];
-                foreach ($data[$i]['options'] as $option) {
-                    array_push($options, $option);
-                }
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 4,
-                    'name' => $data[$i]['question_text'],
-                    'options' => $options,
-                    'required' => $data[$i]['required'],
-                ]);
-                // dump($question);
-            } else if ($data[$i]['question_type'] === 'checkbox') {
-                $options = [];
-                foreach ($data[$i]['options'] as $option) {
-                    array_push($options, $option);
-                }
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 5,
-                    'name' => $data[$i]['question_text'],
-                    'options' => $options,
-                    'required' => $data[$i]['required'],
-                ]);
-                // dump($question);
+            $question_id = $data[$i]['id'];
+            $type = $data[$i]['type'];
+            $name = $data[$i]['name'];
+            $options = $data[$i]['options'];
+            $required = $data[$i]['required'];
+
+            $question_id = $question_id == 0 ? false : $question_id;
+
+            $attributes = [
+                'form_id' => $form_id,
+                'type' => $type,
+                'name' => $name,
+                'options' => $options,
+                'required' => $required,
+            ];
+
+            if ($question_id) {
+                // Update existing record
+                $question = Question::updateOrCreate(['id' => $question_id], $attributes);
+            } else {
+                // Create new record
+                $question = Question::create($attributes);
             }
         }
-        $form->save();
+
         session()->flash('form-create-message',"Form: $form->name updated successfully!!");
 
         return response()->json(['message' => 'Form data updated successfully'], 200);
@@ -389,3 +347,87 @@ class FormController extends Controller
         return FacadeResponse::make('', 200, $headers);
     }
 }
+
+
+//update page code
+// $user = Auth::user();
+//         $data = $request->all();
+
+//         $form = Form::findOrFail($id);
+//         $form->questions()->delete();
+//         // dump($data[1]['title']);
+//         $title = $data[1]['title'];
+//         $description = $data[1]['description'];
+//         if (!$description) {
+//             $description = "";
+//         }
+//         // dd($description);
+
+//         $form_id = $form->id;
+//         $form->name = $title;
+//         $form->description = $description;
+//         // dd($form);
+//         for ($i = 2; $i < count($data); $i++) {
+//             if ($data[$i]['question_type'] === 'short_text') {
+//                 $question = Question::create([
+//                     'form_id' => $form_id,
+//                     'type' => 1,
+//                     'name' => $data[$i]['question_text'],
+//                     'options' => [],
+//                     'required' => $data[$i]['required'],
+//                 ]);
+//                 // dump($question);
+//             } else if ($data[$i]['question_type'] === 'long_text') {
+//                 $question = Question::create([
+//                     'form_id' => $form_id,
+//                     'type' => 2,
+//                     'name' => $data[$i]['question_text'],
+//                     'options' => [],
+//                     'required' => $data[$i]['required'],
+//                 ]);
+//                 // dump($question);
+//             } else if ($data[$i]['question_type'] === 'multiple-choice') {
+//                 $options = [];
+//                 foreach ($data[$i]['options'] as $option) {
+//                     array_push($options, $option);
+//                 }
+//                 $question = Question::create([
+//                     'form_id' => $form_id,
+//                     'type' => 3,
+//                     'name' => $data[$i]['question_text'],
+//                     'options' => $options,
+//                     'required' => $data[$i]['required'],
+//                 ]);
+//                 // dump($question);
+//             } else if ($data[$i]['question_type'] === 'drop-down') {
+//                 $options = [];
+//                 foreach ($data[$i]['options'] as $option) {
+//                     array_push($options, $option);
+//                 }
+//                 $question = Question::create([
+//                     'form_id' => $form_id,
+//                     'type' => 4,
+//                     'name' => $data[$i]['question_text'],
+//                     'options' => $options,
+//                     'required' => $data[$i]['required'],
+//                 ]);
+//                 // dump($question);
+//             } else if ($data[$i]['question_type'] === 'checkbox') {
+//                 $options = [];
+//                 foreach ($data[$i]['options'] as $option) {
+//                     array_push($options, $option);
+//                 }
+//                 $question = Question::create([
+//                     'form_id' => $form_id,
+//                     'type' => 5,
+//                     'name' => $data[$i]['question_text'],
+//                     'options' => $options,
+//                     'required' => $data[$i]['required'],
+//                 ]);
+//                 // dump($question);
+//             }
+//         }
+//         $form->save();
+//         session()->flash('form-create-message',"Form: $form->name updated successfully!!");
+
+//         return response()->json(['message' => 'Form data updated successfully'], 200);

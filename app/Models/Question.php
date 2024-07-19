@@ -23,6 +23,10 @@ class Question extends Model
         'options' => 'array',
     ];
 
+    protected $attributes = [
+        'options' => '[]',
+    ];
+
     public function response()
     {
         return $this->hasOne(Response::class);
