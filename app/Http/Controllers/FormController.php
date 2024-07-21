@@ -38,11 +38,11 @@ class FormController extends Controller
             'user_id' => $user->id,
             'description' => $desc,
             'published' => false,
-            'accept_response' => false
+            'accept_response' => false,
         ]);
         // echo($form->id);
         $form_id = $form->id;
-
+        $question_order = [];
         for ($i = 1; $i < count($data); $i++) {
             if ($data[$i]['question_type'] === 'short_text') {
                 $question = Question::create([
@@ -52,6 +52,7 @@ class FormController extends Controller
                     'options' => [],
                     'required' => $data[$i]['required'],
                 ]);
+                $question_order[] = $question->id;
                 // dump($question);
             } else if ($data[$i]['question_type'] === 'long_text') {
                 $question = Question::create([
@@ -61,6 +62,7 @@ class FormController extends Controller
                     'options' => [],
                     'required' => $data[$i]['required'],
                 ]);
+                $question_order[] = $question->id;
                 // dump($question);
             } else if ($data[$i]['question_type'] === 'multiple-choice') {
                 $options = [];
@@ -74,6 +76,7 @@ class FormController extends Controller
                     'options' => $options,
                     'required' => $data[$i]['required'],
                 ]);
+                $question_order[] = $question->id;
                 // dump($question);
             } else if ($data[$i]['question_type'] === 'drop-down') {
                 $options = [];
@@ -87,6 +90,7 @@ class FormController extends Controller
                     'options' => $options,
                     'required' => $data[$i]['required'],
                 ]);
+                $question_order[] = $question->id;
                 // dump($question);
             } else if ($data[$i]['question_type'] === 'checkbox') {
                 $options = [];
@@ -100,10 +104,12 @@ class FormController extends Controller
                     'options' => $options,
                     'required' => $data[$i]['required'],
                 ]);
+                $question_order[] = $question->id;
                 // dump($question);
             }
         }
-
+        $form->question_order = $question_order;
+        $form->save();
         session()->flash('form-create-message',"Form: $form->name created successfully!!");
 
         return response()->json(['message' => 'Form data saved successfully'], 200);
@@ -112,7 +118,17 @@ class FormController extends Controller
     public function edit($id)
     {
         $form = Form::findOrFail($id);
-        return view('user.form-edit',compact(['form']));
+        $questionOrder = $form->question_order;
+
+        if (count($questionOrder) > 0) {
+            $questionMarks = implode(',', array_fill(0, count($questionOrder), '?'));
+            $questions = Question::whereIn('id', $questionOrder)
+                ->orderByRaw("FIELD(id, {$questionMarks})", $questionOrder)
+                ->get();
+        } else {
+            $questions = collect();
+        }
+        return view('user.form-edit',compact(['form','questions']));
     }
 
     public function update($id, Request $request){
@@ -130,8 +146,9 @@ class FormController extends Controller
         $form_id = $form->id;
         $form->name = $title;
         $form->description = $description;
-        $form->save();
+        // $form->save();
         // dd($form);
+        $question_order = [];
         for ($i = 2; $i < count($data); $i++) {
             $question_id = $data[$i]['id'];
             $type = $data[$i]['type'];
@@ -150,9 +167,10 @@ class FormController extends Controller
             ];
 
             $question = Question::updateOrCreate(['id' => $question_id], $attributes);
-
+            $question_order[] = $question->id;
         }
-
+        $form->question_order = $question_order;
+        $form->save();
         session()->flash('form-create-message',"Form: $form->name updated successfully!!");
 
         return response()->json(['message' => 'Form data updated successfully'], 200);
@@ -211,16 +229,33 @@ class FormController extends Controller
         $user = Auth::user();
         $form = Form::findOrFail($id);
         $responses = $form->responses()->paginate(1);
-        // $responses = $form->responses()->
-        return view('user.responses', compact(['form','responses']));
+        $questionOrder = $form->question_order;
+        if (count($questionOrder) > 0) {
+            $questionMarks = implode(',', array_fill(0, count($questionOrder), '?'));
+            $questions = Question::whereIn('id', $questionOrder)
+                ->orderByRaw("FIELD(id, {$questionMarks})", $questionOrder)
+                ->get();
+        } else {
+            $questions = collect();
+        }
+        return view('user.responses', compact(['form','responses','questions']));
     }
 
     public function getResponse($id)
     {
         $user = Auth::user();
         $form = Form::findOrFail($id);
+        $questionOrder = $form->question_order;
 
-        return view('user.getResponse', compact(['user', 'form']));
+        if (count($questionOrder) > 0) {
+            $questionMarks = implode(',', array_fill(0, count($questionOrder), '?'));
+            $questions = Question::whereIn('id', $questionOrder)
+                ->orderByRaw("FIELD(id, {$questionMarks})", $questionOrder)
+                ->get();
+        } else {
+            $questions = collect();
+        }
+        return view('user.getResponse', compact(['user', 'form','questions']));
     }
 
     public function saveResponse(Request $request, $id)

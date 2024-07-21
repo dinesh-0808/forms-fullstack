@@ -19,6 +19,12 @@ class Form extends Model
         'accept_response'
     ];
 
+    protected $attributes = [
+        'question_order' => '[]',
+    ];
+    protected $casts = [
+        'question_order' => 'array',
+    ];
 
     public function questions(){
         return $this->hasMany(Question::class);

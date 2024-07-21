@@ -169,7 +169,7 @@
                                         </div>
                                     </div>
 
-                                    @foreach ($form->questions as $question)
+                                    @foreach ($questions as $question)
 
                                         @php
 
@@ -259,7 +259,7 @@
                             <div class="tab-pane fade show" id="summary" role="tabpanel"
                                 aria-labelledby="summary-tab">
                                 @if(count($form->responses)>0)
-                                @foreach ($form->questions as $question)
+                                @foreach ($questions as $question)
                                     <div class="bg-white rounded shadow-sm p-4 question-box title-box"
                                         style="padding: 10px; margin: 10px; width: 500px;">
                                         <h3 class="card-title">{{ $question->name }}</h3>

@@ -26,7 +26,7 @@
                     </div>
 
 
-                    @foreach ($form->questions as $question)
+                    @foreach ($questions as $question)
                         @if ($question->type == 1)
                             <div class="bg-white rounded shadow-sm p-4 question-box" question-box="{{ $loop->iteration }}">
                                 <div class="form-group">

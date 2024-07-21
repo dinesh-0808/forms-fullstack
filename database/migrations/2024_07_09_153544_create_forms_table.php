@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->boolean('published')->nullable()->default(false);;
             $table->boolean('accept_response')->nullable()->default(false);
+            $table->json('question_order');
             $table->timestamps();
         });
     }
