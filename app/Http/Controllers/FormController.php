@@ -120,8 +120,6 @@ class FormController extends Controller
         $data = $request->all();
 
         $form = Form::findOrFail($id);
-        $form->questions()->delete();
-        // dump($data[1]['title']);
         $title = $data[1]['title'];
         $description = $data[1]['description'];
         if (!$description) {
@@ -151,13 +149,8 @@ class FormController extends Controller
                 'required' => $required,
             ];
 
-            if ($question_id) {
-                // Update existing record
-                $question = Question::updateOrCreate(['id' => $question_id], $attributes);
-            } else {
-                // Create new record
-                $question = Question::create($attributes);
-            }
+            $question = Question::updateOrCreate(['id' => $question_id], $attributes);
+
         }
 
         session()->flash('form-create-message',"Form: $form->name updated successfully!!");

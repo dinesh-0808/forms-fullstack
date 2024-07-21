@@ -98,6 +98,7 @@
 
             @if($question->type==1)
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box6{{ $loop->iteration }}" question-box="6{{ $loop->iteration }}" >
+                <input type="hidden" name="question_id" value="{{ $question->id }}">
                 <div class="shortText">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="question" value="{{ $question->name }}"></div>
@@ -114,7 +115,6 @@
                         <input type="text" class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="write answer here" disabled=true >
                     </div>
                     <hr>
-                    <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton6{{ $loop->iteration }}" deleteButton="6{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="6{{ $loop->iteration }}"></i>
                     </button>
@@ -129,6 +129,7 @@
             </div>
             @elseif ($question->type==2)
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box7{{ $loop->iteration }}" question-box="7{{ $loop->iteration }}" >
+                <input type="hidden" name="question_id" value="{{ $question->id }}">
                 <div class="longText">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
@@ -145,7 +146,6 @@
                         <textarea class="form-control" id="inputHeader" aria-describedby="headerHelp" placeholder="Write answer here" disabled></textarea>
                     </div>
                     <hr>
-                    <input type="hidden" name="question_id" value="{{ $question->id }}">
 
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton7{{ $loop->iteration }}" deleteButton="7{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="7{{ $loop->iteration }}"></i>
@@ -161,6 +161,7 @@
             </div>
             @elseif ($question->type == 3)
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box8{{ $loop->iteration }}" question-box="8{{ $loop->iteration }}"  >
+                <input type="hidden" name="question_id" value="{{ $question->id }}">
                 <div class="multipleChoice">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
@@ -184,7 +185,6 @@
                     </div>
                     <button type="button" class="btn btn-secondary mt-2 addButton" id="mcqOptionsButton8{{ $loop->iteration }}" mcqOptionsButton="8{{ $loop->iteration }}" onclick="addMultipleChoiceOptionButton(event)">Add Option</button>
                     <hr>
-                    <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton8{{ $loop->iteration }}" deleteButton="8{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="8{{ $loop->iteration }}"></i>
                     </button>
@@ -199,6 +199,7 @@
             </div>
             @elseif ($question->type==4)
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box9{{ $loop->iteration }}" question-box="9{{ $loop->iteration }}" >
+                <input type="hidden" name="question_id" value="{{ $question->id }}">
                 <div class="dropDown">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
@@ -223,7 +224,6 @@
                         <button type="button" class="btn btn-secondary mt-2 addButton" id="dropdownOptionsButton9{{ $loop->iteration }}" dropdownOptionsButton="9{{ $loop->iteration }}" onclick="addDropdownOptionButton(event)">Add Option</button>
                     </div>
                     <hr>
-                    <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton9{{ $loop->iteration }}" deleteButton="9{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="9{{ $loop->iteration }}"></i>
                     </button>
@@ -238,6 +238,7 @@
             </div>
             @elseif ($question->type == 5)
             <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box10{{ $loop->iteration }}" question-box="10{{ $loop->iteration }}" >
+                <input type="hidden" name="question_id" value="{{ $question->id }}">
                 <div class="CheckBox">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
@@ -261,7 +262,6 @@
                     </div>
                     <button type="button" class="btn btn-secondary mt-2 addButton" id="checkboxOptionsButton10{{ $loop->iteration }}" checkboxOptionsButton="10{{ $loop->iteration }}" onclick="addCheckBoxOptionButton(event)">Add Option</button>
                     <hr>
-                    <input type="hidden" name="question_id" value="{{ $question->id }}">
                     <button type="button" class="btn btn-secondary mt-2 bottom-right" id="deleteButton10{{ $loop->iteration }}" deleteButton="10{{ $loop->iteration }}" onclick="deleteQuestionBoxEdit(event)">
                         <i class="fa-solid fa-trash" deleteButton="10{{ $loop->iteration }}"></i>
                     </button>
