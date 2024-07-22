@@ -21,8 +21,10 @@
                         </div>
                         <hr>
                         <div class="form-group">
-                            {{ $user->email }} <a href="#">Switch Accounts</a>
+                            {{ $user->email }} <a href="#">Switch Accounts</a><br>
                         </div>
+                        <hr>
+                        <span style="color: red;">* Indicates required question</span>
                     </div>
 
 

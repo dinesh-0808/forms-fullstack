@@ -229,6 +229,7 @@ class FormController extends Controller
         $user = Auth::user();
         $form = Form::findOrFail($id);
         $responses = $form->responses()->paginate(1);
+        // $paginatedQuestion = $form->questions()->paginate(1);
         $questionOrder = $form->question_order;
         if (count($questionOrder) > 0) {
             $questionMarks = implode(',', array_fill(0, count($questionOrder), '?'));
@@ -376,86 +377,3 @@ class FormController extends Controller
     }
 }
 
-
-//update page code
-// $user = Auth::user();
-//         $data = $request->all();
-
-//         $form = Form::findOrFail($id);
-//         $form->questions()->delete();
-//         // dump($data[1]['title']);
-//         $title = $data[1]['title'];
-//         $description = $data[1]['description'];
-//         if (!$description) {
-//             $description = "";
-//         }
-//         // dd($description);
-
-//         $form_id = $form->id;
-//         $form->name = $title;
-//         $form->description = $description;
-//         // dd($form);
-//         for ($i = 2; $i < count($data); $i++) {
-//             if ($data[$i]['question_type'] === 'short_text') {
-//                 $question = Question::create([
-//                     'form_id' => $form_id,
-//                     'type' => 1,
-//                     'name' => $data[$i]['question_text'],
-//                     'options' => [],
-//                     'required' => $data[$i]['required'],
-//                 ]);
-//                 // dump($question);
-//             } else if ($data[$i]['question_type'] === 'long_text') {
-//                 $question = Question::create([
-//                     'form_id' => $form_id,
-//                     'type' => 2,
-//                     'name' => $data[$i]['question_text'],
-//                     'options' => [],
-//                     'required' => $data[$i]['required'],
-//                 ]);
-//                 // dump($question);
-//             } else if ($data[$i]['question_type'] === 'multiple-choice') {
-//                 $options = [];
-//                 foreach ($data[$i]['options'] as $option) {
-//                     array_push($options, $option);
-//                 }
-//                 $question = Question::create([
-//                     'form_id' => $form_id,
-//                     'type' => 3,
-//                     'name' => $data[$i]['question_text'],
-//                     'options' => $options,
-//                     'required' => $data[$i]['required'],
-//                 ]);
-//                 // dump($question);
-//             } else if ($data[$i]['question_type'] === 'drop-down') {
-//                 $options = [];
-//                 foreach ($data[$i]['options'] as $option) {
-//                     array_push($options, $option);
-//                 }
-//                 $question = Question::create([
-//                     'form_id' => $form_id,
-//                     'type' => 4,
-//                     'name' => $data[$i]['question_text'],
-//                     'options' => $options,
-//                     'required' => $data[$i]['required'],
-//                 ]);
-//                 // dump($question);
-//             } else if ($data[$i]['question_type'] === 'checkbox') {
-//                 $options = [];
-//                 foreach ($data[$i]['options'] as $option) {
-//                     array_push($options, $option);
-//                 }
-//                 $question = Question::create([
-//                     'form_id' => $form_id,
-//                     'type' => 5,
-//                     'name' => $data[$i]['question_text'],
-//                     'options' => $options,
-//                     'required' => $data[$i]['required'],
-//                 ]);
-//                 // dump($question);
-//             }
-//         }
-//         $form->save();
-//         session()->flash('form-create-message',"Form: $form->name updated successfully!!");
-
-//         return response()->json(['message' => 'Form data updated successfully'], 200);

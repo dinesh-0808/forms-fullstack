@@ -127,14 +127,14 @@
                                 <a class="nav-link active" id="individual-tab" data-toggle="tab" href="#individual" role="tab"
                                     aria-controls="individual" aria-selected="false">Individual</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab"
-                                    aria-controls="summary" aria-selected="true">Summary</a>
-                            </li>
                             {{-- <li class="nav-item">
                                 <a class="nav-link" id="question-tab" data-toggle="tab" href="#question" role="tab"
                                     aria-controls="question" aria-selected="false">Question</a>
                             </li> --}}
+                            <li class="nav-item">
+                                <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab"
+                                    aria-controls="summary" aria-selected="true">Summary</a>
+                            </li>
 
                         </ul>
                         @endif
@@ -151,7 +151,7 @@
                                 </div>
                             @endif
                             <div class="tab-pane fade active" id="individual" role="tabpanel" aria-labelledby="individual-tab">
-                                <div>
+                                <div style="text-align: center">
                                     {{ $responses->links() }}
                                 </div>
                                 @foreach ($responses as $response)
@@ -256,6 +256,9 @@
 
 
                             </div>
+                            {{-- <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
+
+                            </div> --}}
                             <div class="tab-pane fade show" id="summary" role="tabpanel"
                                 aria-labelledby="summary-tab">
                                 @if(count($form->responses)>0)
@@ -276,6 +279,15 @@
                                             <canvas id="chart-{{ $question->id }}"></canvas>
                                             <script>
                                                 var ctx = document.getElementById('chart-{{ $question->id }}').getContext('2d');
+
+                                                var backgroundColors = {};
+                                                var options = @json(collect($question->options));
+                                                // console.log(options);
+                                                var colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+                                                options.forEach((option, index) => {
+                                                    backgroundColors[String(option)] = colors[index];
+                                                });
+                                                console.log(backgroundColors);
                                                 var chartData = {
                                                     labels: @json(collect($question->options)),
                                                     datasets: [{
@@ -317,14 +329,6 @@
                                 @endif
                             </div>
 
-                            {{-- <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
-                                @foreach ($form->questions as $question)
-                                    <div class="container border border-dark rounded"
-                                        style="padding: 10px; margin: 10px; width: 66%;">
-                                        <h5 class="card-title">{{ $question->name }}</h5>
-                                    </div>
-                                @endforeach
-                            </div> --}}
 
                         </div>
 

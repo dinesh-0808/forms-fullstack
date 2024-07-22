@@ -131,7 +131,7 @@ function addQuestion(event){
             </div>
             <br>
             <div id="mcq-options${MultipleCoiceBoxCount}">
-                <div class="form-check" id="MultipleChoiceBox${MultipleCoiceBoxCount}1">
+                <div class="form-check" id="MultipleChoiceBox${MultipleCoiceBoxCount}1" style="margin-bottom: 12px">
                     <input type="radio" class="form-check-input" name="mcq" id="mcqOption${MultipleCoiceBoxCount}1" value="option" disabled=true>
                     <label class="form-check-label" for="mcqOption1"><input type="text" class='form-control' value="option"></label>
                 </div>
@@ -311,6 +311,7 @@ function addDropdownOptionButton(e) {
     dropdownOptionCount++;
     var newOptionP = document.createElement('p');
     newOptionP.setAttribute('id',"dropdownBox"+dropdownBoxCount+dropdownOptionCount);
+    newOptionP.setAttribute('style',"margin-bottom: 0px;");
 
     var newTextInput = document.createElement('input');
     newTextInput.type = 'text';

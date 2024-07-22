@@ -106,8 +106,8 @@
                 </div>
                 <br>
                 <div id="mcq-options1">
-                    <div class="form-check" id="MultipleChoiceBox11" style="margin-bottom: 6px">
-                        <input type="radio" class="form-check-input" name="mcq" id="mcqOption11" value=" option" disabled=true>
+                    <div class="form-check" id="MultipleChoiceBox11" style="margin-bottom: 12px">
+                        <input type="radio" class="form-check-input" name="mcq" id="mcqOption11" value="option" disabled >
                         <label class="form-check-label" for="mcqOption1"><input type="text" class='form-control' value="option"></label>
                     </div>
                 </div>

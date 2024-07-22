@@ -50,11 +50,11 @@ body {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #673AB7;
 }
 
 .hero {
-    background-color: #007bff;
+    background-color: #673AB7;
     color: #fff;
     text-align: center;
     padding: 5rem 2rem;
@@ -82,7 +82,7 @@ body {
 }
 
 .pricing-card {
-    border: 1px solid #ccc;
+    border: 1px solid #673AB7;
     padding: 2rem;
     width: 30%;
     text-align: center;
@@ -104,7 +104,7 @@ body {
 
 .footer {
     background-color: #333;
-    color: #fff;
+    color: #673AB7;
     padding: 2rem 2rem;
 }
 

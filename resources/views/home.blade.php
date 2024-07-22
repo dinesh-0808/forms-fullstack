@@ -1,5 +1,11 @@
 @extends('layouts.app')
-
+@section('style')
+<style>
+    th {
+            text-align: center;
+    }
+</style>
+@endsection
 @section('content')
     <div class="container">
         @if (Session::has('form-delete-message'))
@@ -45,11 +51,11 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Id</th>
-                                                <th>Title</th>
-                                                <th>Created</th>
-                                                <th>Published</th>
-                                                <th>Actions</th>
+                                                <th style="text-align: center;">Id</th>
+                                                <th style="text-align: center;">Title</th>
+                                                <th style="text-align: center;">Created</th>
+                                                <th style="text-align: center;">Published</th>
+                                                <th style="text-align: center;">Actions</th>
 
                                             </tr>
                                         </thead>
@@ -57,24 +63,25 @@
 
                                             @foreach ($forms as $form)
                                                 <tr>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         {{ (($forms->perPage())*($forms->currentPage()-1)) + $loop->iteration }}
                                                     </td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         {{ $form->name }}
                                                     </td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         {{ $form->created_at->diffForHumans() }}
                                                     </td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         @if ($form->published === 1)
                                                             <h6 style="color: green">published</h6>
                                                         @else
                                                         <h6 style="color: red">not published</h6>
                                                         @endif
                                                     </td>
-                                                    <td>
-                                                        @if($form->published==0)
+                                                    <td >
+                                                        <div style="text-align: center;">
+                                                            @if($form->published==0)
                                                             <a href="{{ route('form.edit',$form->id) }}" class="btn btn-secondary" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
                                                         @endif
                                                         @if($form->published==1)
@@ -87,6 +94,7 @@
                                                         </form>
 
                                                         <a class="btn btn-primary" href="{{ route('form.response', $form->id) }}" title="Responses"><i class="fa-solid fa-users"></i></i></a>
+                                                        </div>
 
 
 

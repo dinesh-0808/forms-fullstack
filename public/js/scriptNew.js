@@ -95,7 +95,7 @@ function dropdownChangeButton(event) {
             </div>
             <br>
             <div id="mcq-options${MultipleCoiceBoxCount}">
-                <div class="form-check" id="MultipleChoiceBox${MultipleCoiceBoxCount}1" style="margin-bottom: 6px">
+                <div class="form-check" id="MultipleChoiceBox${MultipleCoiceBoxCount}1" style="margin-bottom: 12px">
                     <input type="radio" class="form-check-input" name="mcq" id="mcqOption${MultipleCoiceBoxCount}1" value="option" disabled=true>
                     <label class="form-check-label" for="mcqOption1"><input type="text" class='form-control' value="option" ></label>
                 </div>
@@ -171,7 +171,7 @@ function dropdownChangeButton(event) {
             </div>
             <br>
             <div id="checkbox-options${checkboxBoxCount}">
-                <div class="form-check" id="checkboxBox${checkboxBoxCount}1">
+                <div class="form-check" id="checkboxBox${checkboxBoxCount}1" style="margin-bottom: 12px;">
                     <input class="form-check-input" type="checkbox" id="checkboxOption1" name="checkbox" value="option1" disabled=true>
                     <label class="form-check-label" for="checkboxOption1"><input type="text" class='form-control' value="option"></label>
                 </div>
