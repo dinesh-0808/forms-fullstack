@@ -10,6 +10,7 @@ use App\Models\Response;
 use App\Models\Answer;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response as FacadeResponse;
+use Illuminate\Support\Facades\Validator;
 
 class FormController extends Controller
 {
@@ -25,9 +26,52 @@ class FormController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $data = $request->json()->all();
+        $data = $request->all();
         // Log::info("logg info", $request->json()->all());
         // dd($request->json()->all());
+        $rules = [
+            '0.title' => 'required|string|max:255',
+            '0.description' => 'nullable|string|max:1000',
+            '1.type' => 'required|integer|in:1,2,3,4,5',
+            '1.name' => 'required|string|max:255',
+            '1.options' => 'array',
+            '1.options.*' => 'string|max:255',
+            '1.required' => 'required|boolean',
+        ];
+
+        $messages = [
+            '0.title.required' => 'The form title is required.',
+            '0.title.string' => 'The form title must be a string.',
+            '0.title.max' => 'The form title must not exceed 255 characters.',
+            '0.description.string' => 'The description must be a string.',
+            '0.description.max' => 'The description must not exceed 1000 characters.',
+            '1.type.required' => 'The question type is required.',
+            '1.type.in' => 'The question type must be one of: 1 (short text), 2 (long text), 3 (multiple choice), 4 (dropdown), or 5 (checkbox).',
+            '1.name.required' => 'The question name is required.',
+            '1.name.string' => 'The question name must be a string.',
+            '1.name.max' => 'The question name must not exceed 255 characters.',
+            '1.options.array' => 'The options must be an array.',
+            '1.options.*.string' => 'Each option must be a string.',
+            '1.options.*.max' => 'Each option must not exceed 255 characters.',
+            '1.required.required' => 'The required field is required.',
+            '1.required.boolean' => 'The required field must be true or false.'
+        ];
+
+        // Applying the same set of rules for all items starting from index 1
+        for ($i = 1; $i < count($data); $i++) {
+            $rules["$i.type"] = 'required|integer|in:1,2,3,4,5';
+            $rules["$i.name"] = 'required|string|max:255';
+            $rules["$i.options"] = 'array';
+            $rules["$i.options.*"] = 'string|max:255';
+            $rules["$i.required"] = 'required|boolean';
+        }
+
+        $validator = Validator::make($data, $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $title = $data[0]['title'];
         $desc = $data[0]['description'];
         if (!$desc) {
@@ -44,69 +88,22 @@ class FormController extends Controller
         $form_id = $form->id;
         $question_order = [];
         for ($i = 1; $i < count($data); $i++) {
-            if ($data[$i]['question_type'] === 'short_text') {
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 1,
-                    'name' => $data[$i]['question_text'],
-                    'options' => [],
-                    'required' => $data[$i]['required'],
-                ]);
-                $question_order[] = $question->id;
-                // dump($question);
-            } else if ($data[$i]['question_type'] === 'long_text') {
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 2,
-                    'name' => $data[$i]['question_text'],
-                    'options' => [],
-                    'required' => $data[$i]['required'],
-                ]);
-                $question_order[] = $question->id;
-                // dump($question);
-            } else if ($data[$i]['question_type'] === 'multiple-choice') {
-                $options = [];
-                foreach ($data[$i]['options'] as $option) {
-                    array_push($options, $option);
-                }
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 3,
-                    'name' => $data[$i]['question_text'],
-                    'options' => $options,
-                    'required' => $data[$i]['required'],
-                ]);
-                $question_order[] = $question->id;
-                // dump($question);
-            } else if ($data[$i]['question_type'] === 'drop-down') {
-                $options = [];
-                foreach ($data[$i]['options'] as $option) {
-                    array_push($options, $option);
-                }
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 4,
-                    'name' => $data[$i]['question_text'],
-                    'options' => $options,
-                    'required' => $data[$i]['required'],
-                ]);
-                $question_order[] = $question->id;
-                // dump($question);
-            } else if ($data[$i]['question_type'] === 'checkbox') {
-                $options = [];
-                foreach ($data[$i]['options'] as $option) {
-                    array_push($options, $option);
-                }
-                $question = Question::create([
-                    'form_id' => $form_id,
-                    'type' => 5,
-                    'name' => $data[$i]['question_text'],
-                    'options' => $options,
-                    'required' => $data[$i]['required'],
-                ]);
-                $question_order[] = $question->id;
-                // dump($question);
-            }
+            $type = $data[$i]['type'];
+            $name = $data[$i]['name'];
+            $options = $data[$i]['options'];
+            $required = $data[$i]['required'];
+
+
+            $attributes = [
+                'form_id' => $form_id,
+                'type' => (int)$type,
+                'name' => $name,
+                'options' => $options,
+                'required' => $required,
+            ];
+
+            $question = Question::create($attributes);
+            $question_order[] = $question->id;
         }
         $form->question_order = $question_order;
         $form->save();
@@ -134,6 +131,49 @@ class FormController extends Controller
     public function update($id, Request $request){
         $user = Auth::user();
         $data = $request->all();
+
+        $rules = [
+            '1.title' => 'required|string|max:255',
+            '1.description' => 'nullable|string|max:1000',
+        ];
+
+        // Applying rules for each question starting from index 2
+        for ($i = 2; $i < count($data); $i++) {
+            $rules["$i.id"] = 'required|string';  // Each question must have a numeric ID
+            $rules["$i.type"] = 'required|integer|in:1,2,3,4,5';
+            $rules["$i.name"] = 'required|string|max:255';
+            $rules["$i.options"] = 'array';
+            $rules["$i.options.*"] = 'string|max:255';
+            $rules["$i.required"] = 'required|boolean';
+        }
+
+        $messages = [
+            '0.id.required' => 'The form ID is required.',
+            '0.id.integer' => 'The form ID must be an integer.',
+            '1.title.required' => 'The form title is required.',
+            '1.title.string' => 'The form title must be a string.',
+            '1.title.max' => 'The form title must not exceed 255 characters.',
+            '1.description.string' => 'The description must be a string.',
+            '1.description.max' => 'The description must not exceed 1000 characters.',
+            '*.id.required' => 'The question ID is required.',
+            '*.id.integer' => 'The question ID must be an integer.',
+            '*.type.required' => 'The question type is required.',
+            '*.type.in' => 'The question type must be one of: 1 (short text), 2 (long text), 3 (multiple choice), 4 (dropdown), or 5 (checkbox).',
+            '*.name.required' => 'The question name is required.',
+            '*.name.string' => 'The question name must be a string.',
+            '*.name.max' => 'The question name must not exceed 255 characters.',
+            '*.options.array' => 'The options must be an array.',
+            '*.options.*.string' => 'Each option must be a string.',
+            '*.options.*.max' => 'Each option must not exceed 255 characters.',
+            '*.required.required' => 'The required field is required.',
+            '*.required.boolean' => 'The required field must be true or false.'
+        ];
+
+        $validator = Validator::make($data, $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $form = Form::findOrFail($id);
         $title = $data[1]['title'];

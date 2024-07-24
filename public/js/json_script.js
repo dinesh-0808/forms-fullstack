@@ -93,14 +93,6 @@ function createJsonForm() {
     let formContainerTitle = document.getElementById("form-container-title");
     let formContainer = document.getElementById("form-container");
 
-    // if(document.getElementById('form-edit')){
-    //     let form_id = document.getElementById('form-edit').getAttribute('form');
-    // formData.push(
-    //     {
-    //         id: form_id,
-    //     }
-    // )
-    // }
 
     let children = formContainerTitle.children;
 
@@ -141,9 +133,9 @@ function createJsonForm() {
                     ".shortText .form-group input"
                 ).value;
                 formData.push({
-                    question_id: i + 1,
-                    question_type: "short_text",
-                    question_text: questionText,
+                    type: 1,
+                    name: questionText,
+                    options: [],
                     required: require,
                 });
             } else if (child.querySelector(".longText")) {
@@ -152,9 +144,9 @@ function createJsonForm() {
                     ".longText .form-group input"
                 ).value;
                 formData.push({
-                    question_id: i + 1,
-                    question_type: "long_text",
-                    question_text: questionText,
+                    type: 2,
+                    name: questionText,
+                    options: [],
                     required: require,
                 });
             } else if (child.querySelector(".multipleChoice")) {
@@ -173,9 +165,8 @@ function createJsonForm() {
                     option_labels.push(optionText);
                 });
                 formData.push({
-                    question_id: i + 1,
-                    question_type: "multiple-choice",
-                    question_text: questionText,
+                    type: 3,
+                    name: questionText,
                     options: option_labels,
                     required: require,
                 });
@@ -194,9 +185,8 @@ function createJsonForm() {
                     option_labels.push(optionText);
                 });
                 formData.push({
-                    question_id: i + 1,
-                    question_type: "drop-down",
-                    question_text: questionText,
+                    type: 4,
+                    name: questionText,
                     options: option_labels,
                     required: require,
                 });
@@ -213,9 +203,8 @@ function createJsonForm() {
                     option_labels.push(optionText);
                 });
                 formData.push({
-                    question_id: i + 1,
-                    question_type: "checkbox",
-                    question_text: questionText,
+                    type: 5,
+                    name: questionText,
                     options: option_labels,
                     required: require,
                 });

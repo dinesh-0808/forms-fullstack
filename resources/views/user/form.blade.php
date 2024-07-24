@@ -66,8 +66,8 @@
 </div>
 <div class="container mt-5 custom-container">
     <div id="form-container-title">
-        <div class="bg-white rounded shadow-sm p-4 mb-3 preview-button">
-            <h1 style="text-align: center;">MY FORMS</h1>
+        <div class="bg-white rounded shadow-sm p-4 mb-2 preview-button">
+            <h1 style="text-align: center; color: #673AB7;">MY FORMS</h1>
             <button type="button" class="btn btn-secondary mt-3 btn-preview" onclick="openPreview()"><i class="fa-solid fa-eye"></i></button>
         </div>
 
