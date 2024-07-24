@@ -358,7 +358,7 @@ function editJsonForm() {
                 });
                 formData.push({
                     id: question_id,
-                    type: "checkbox",
+                    type: 5,
                     name: questionText,
                     options: option_labels,
                     required: require,

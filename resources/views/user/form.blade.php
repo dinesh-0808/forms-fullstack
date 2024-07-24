@@ -66,7 +66,7 @@
 </div>
 <div class="container mt-5 custom-container">
     <div id="form-container-title">
-        <div class="bg-white rounded shadow-sm p-4 question-box preview-button">
+        <div class="bg-white rounded shadow-sm p-4 mb-3 preview-button">
             <h1 style="text-align: center;">MY FORMS</h1>
             <button type="button" class="btn btn-secondary mt-3 btn-preview" onclick="openPreview()"><i class="fa-solid fa-eye"></i></button>
         </div>
@@ -92,7 +92,7 @@
 
 
     <div id="form-container">
-        <div class="bg-white rounded shadow-sm p-4 question-box drag-box" id="question-box31" question-box="31">
+        <div class="bg-white rounded shadow-sm p-4 question-box drag-box active-border" id="question-box31" question-box="31">
             <div class="multipleChoice">
                 <div class="form-group header">
                     <div class="question"><input type="text"  class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
@@ -126,12 +126,13 @@
                     </label>
                 </div>
             </div>
+            <button value="multiple-choice" id="add-section-btn" class="btn btn-primary floating-button" onclick="addQuestion(event)"><i class="fa-solid fa-plus"></i></button>
         </div>
 
     </div>
-    <div class="floating-bar" id="question-type">
+    {{-- <div class="floating-bar" id="question-type">
         <button value="multiple-choice" class="floating-button"><i class="fa-solid fa-plus"></i></button>
-    </div>
+    </div> --}}
 
     <button id="form-submit" class="btn btn-primary">Save</button>
 </div>

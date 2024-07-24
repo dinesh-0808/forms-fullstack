@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.querySelectorAll('.floating-button').forEach(box => {
-    box.addEventListener('click', addQuestion);
-});
+// document.querySelectorAll('.floating-button').forEach(box => {
+//     box.addEventListener('click', addQuestion);
+// });
 
 var shortTextBoxCount = 0;
 var longTextBoxCount = 0;
@@ -223,7 +223,16 @@ function addQuestion(event){
 
     questionDiv.innerHTML = htmlcode;
     console.log(questionDiv);
-    document.querySelector("#form-container").appendChild(questionDiv);
+
+    var addButton = document.getElementById('add-section-btn');
+    var neighbourDiv = addButton.parentNode;
+    if (neighbourDiv.classList.contains('title-box')) {
+        var form_container = document.getElementById('form-container');
+        form_container.prepend(questionDiv);
+    } else {
+        neighbourDiv.insertAdjacentElement('afterend',questionDiv);
+    }
+
 
 
     // adding click event listeners to all
@@ -430,33 +439,30 @@ function handleQuestionBoxClick(event) {
     document.querySelectorAll('.question-box').forEach(box => {
         box.classList.remove('active-border');
     });
-    // console.log(event);
+    // console.log(event.currentTarget);
     // Add the active-border class to the clicked .question-box element
     event.currentTarget.classList.add('active-border');
+    var plusButton = document.getElementById('add-section-btn');
+    if(plusButton){
 
-    // // remove the default button
-    // var child = document.getElementById('question-type');
-    // var parent = document.getElementById('question-type').parentNode;
-    // parent.removeChild(child);
+        plusButton.parentNode.removeChild(plusButton);
+    }
+    var button = document.createElement('button');
 
+    // Set the attributes
+    button.setAttribute('value', 'multiple-choice');
+    button.setAttribute('id', 'add-section-btn');
+    button.setAttribute('class', 'btn btn-primary floating-button');
 
-    // // <div class="floating-bar" id="question-type">
-    // //             <button value="multiple-choice" class="floating-button"><i class="fa-solid fa-plus"></i></button>
-    // //         </div>
-    // var div = document.createElement('div');
-    // div.classList.add('floating-bar');
-    // div.setAttribute('id','question-type');
-    // var button = document.createElemen   t('button');
-    // button.setAttribute('value','multiple-choice');
-    // button.classList.add('floating-button');
-    // var i = document.createElement('i');
-    // i.classList.add('fa-solid','fa-plus');
-    // button.appendChild(i);
-    // div.appendChild(button);
+    // Set the button's text content to "+"
+    button.innerHTML = '<i class="fa-solid fa-plus"></i>';
 
-    // event.currentTarget.appendChild(div);
+    // Set the onclick attribute to call the addQuestion function
+    button.setAttribute('onclick', 'addQuestion(event)');
 
-
+    // Append the button to the target element
+    console.log(event.currentTarget);
+    event.currentTarget.appendChild(button);
 
 }
 

@@ -68,13 +68,13 @@
 
 <div class="container mt-5 custom-container">
     <div id="form-container-title">
-        <div class="bg-white rounded shadow-sm p-4 question-box preview-button">
+        <div class="bg-white rounded shadow-sm p-4 mb-3 preview-button">
             <h1 style="text-align: center;">MY FORMS</h1>
             <button type="button" class="btn btn-secondary mt-3 btn-preview" onclick="openPreview()"><i class="fa-solid fa-eye"></i></button>
         </div>
 
 
-        <div class="bg-white rounded shadow-sm p-4 question-box title-box">
+        <div class="bg-white rounded shadow-sm p-4 question-box title-box active-border">
             <div class="formTitleAndDesc">
                 <div class="form-group">
                     <input type="text" class="form-control" id="formTitle" aria-describedby="headerHelp" value="{{ $form->name }}">
@@ -84,6 +84,7 @@
                     <input type="text" class="form-control" id="formDesc" aria-describedby="headerHelp" placeholder="Form Description" value="{{ $form->description }}">
                 </div>
             </div>
+            <button value="multiple-choice" id="add-section-btn" class="btn btn-primary floating-button" onclick="addQuestion(event)"><i class="fa-solid fa-plus"></i></button>
         </div>
 
     </div>
@@ -282,10 +283,10 @@
 
 
     </div>
-
+{{--
     <div class="floating-bar" id="question-type">
         <button value="multiple-choice" class="floating-button"><i class="fa-solid fa-plus"></i></button>
-    </div>
+    </div> --}}
     <button id="form-edit" class="btn btn-primary" form="{{ $form->id }}">Save</button>
 
 </div>

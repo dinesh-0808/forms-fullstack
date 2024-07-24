@@ -142,12 +142,11 @@ class FormController extends Controller
             $description = "";
         }
         // dd($description);
-
+        // dd($data);
         $form_id = $form->id;
         $form->name = $title;
         $form->description = $description;
         // $form->save();
-        // dd($form);
         $question_order = [];
         for ($i = 2; $i < count($data); $i++) {
             $question_id = $data[$i]['id'];
@@ -160,7 +159,7 @@ class FormController extends Controller
 
             $attributes = [
                 'form_id' => $form_id,
-                'type' => $type,
+                'type' => (int)$type,
                 'name' => $name,
                 'options' => $options,
                 'required' => $required,
@@ -171,6 +170,7 @@ class FormController extends Controller
         }
         $form->question_order = $question_order;
         $form->save();
+        // dd($form);
         session()->flash('form-create-message',"Form: $form->name updated successfully!!");
 
         return response()->json(['message' => 'Form data updated successfully'], 200);

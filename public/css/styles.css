@@ -282,3 +282,12 @@ p {
 }
 
 
+#add-section-btn {
+    position: absolute;
+    left: -60px;
+    top: 50px;
+    z-index: 1000;
+    border-radius: 50%;
+    background-color: rgb(103, 58, 183);
+
+}
