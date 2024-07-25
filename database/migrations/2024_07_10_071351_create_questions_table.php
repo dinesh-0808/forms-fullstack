@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('form_id');
             $table->foreign('form_id')->references('id')->on('forms')->cascadeOnDelete();
             $table->integer('type'); // 1- short answer, 2- long answer, 3- mcq, 4- dropdown, 5- checkbox
-            $table->string('name');//question text
+            $table->string('name')->nullable()->default("");//question text
             $table->json('options')->nullable();
             $table->boolean('required');
             $table->timestamps();

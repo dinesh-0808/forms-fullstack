@@ -11,6 +11,7 @@ use App\Models\Answer;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response as FacadeResponse;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class FormController extends Controller
 {
@@ -25,6 +26,7 @@ class FormController extends Controller
 
     public function store(Request $request)
     {
+
         $user = Auth::user();
         $data = $request->all();
         // Log::info("logg info", $request->json()->all());
@@ -32,11 +34,6 @@ class FormController extends Controller
         $rules = [
             '0.title' => 'required|string|max:255',
             '0.description' => 'nullable|string|max:1000',
-            '1.type' => 'required|integer|in:1,2,3,4,5',
-            '1.name' => 'required|string|max:255',
-            '1.options' => 'array',
-            '1.options.*' => 'string|max:255',
-            '1.required' => 'required|boolean',
         ];
 
         $messages = [
@@ -45,24 +42,26 @@ class FormController extends Controller
             '0.title.max' => 'The form title must not exceed 255 characters.',
             '0.description.string' => 'The description must be a string.',
             '0.description.max' => 'The description must not exceed 1000 characters.',
-            '1.type.required' => 'The question type is required.',
-            '1.type.in' => 'The question type must be one of: 1 (short text), 2 (long text), 3 (multiple choice), 4 (dropdown), or 5 (checkbox).',
-            '1.name.required' => 'The question name is required.',
-            '1.name.string' => 'The question name must be a string.',
-            '1.name.max' => 'The question name must not exceed 255 characters.',
-            '1.options.array' => 'The options must be an array.',
-            '1.options.*.string' => 'Each option must be a string.',
-            '1.options.*.max' => 'Each option must not exceed 255 characters.',
-            '1.required.required' => 'The required field is required.',
-            '1.required.boolean' => 'The required field must be true or false.'
+            '*.type.required' => 'The question type is required.',
+            '*.type.in' => 'The question type must be one of: 1 (short text), 2 (long text), 3 (multiple choice), 4 (dropdown), or 5 (checkbox).',
+            '*.name.required' => 'The question name is required.',
+            '*.name.string' => 'The question name must be a string.',
+            '*.name.max' => 'The question name must not exceed 255 characters.',
+            '*.options.array' => 'The options must be an array.',
+            '*.options.min' => 'There should be atleast one option.',
+            '*.options.*.required' => 'the option name is required',
+            '*.options.*.string' => 'Each option must be a string.',
+            '*.options.*.max' => 'Each option must not exceed 255 characters.',
+            '*.required.required' => 'The required field is required.',
+            '*.required.boolean' => 'The required field must be true or false.'
         ];
 
         // Applying the same set of rules for all items starting from index 1
         for ($i = 1; $i < count($data); $i++) {
             $rules["$i.type"] = 'required|integer|in:1,2,3,4,5';
-            $rules["$i.name"] = 'required|string|max:255';
-            $rules["$i.options"] = 'array';
-            $rules["$i.options.*"] = 'string|max:255';
+            $rules["$i.name"] = 'nullable|string|max:255';
+            $rules["$i.options"] = 'required|array|min:1';
+            $rules["$i.options.*"] = 'required|string|max:255';
             $rules["$i.required"] = 'required|boolean';
         }
 
@@ -110,6 +109,8 @@ class FormController extends Controller
         session()->flash('form-create-message',"Form: $form->name created successfully!!");
 
         return response()->json(['message' => 'Form data saved successfully'], 200);
+
+
     }
 
     public function edit($id)
@@ -139,17 +140,18 @@ class FormController extends Controller
 
         // Applying rules for each question starting from index 2
         for ($i = 2; $i < count($data); $i++) {
-            $rules["$i.id"] = 'required|string';  // Each question must have a numeric ID
             $rules["$i.type"] = 'required|integer|in:1,2,3,4,5';
-            $rules["$i.name"] = 'required|string|max:255';
-            $rules["$i.options"] = 'array';
-            $rules["$i.options.*"] = 'string|max:255';
+            $rules["$i.name"] = 'nullable|string|max:255';
+            $rules["$i.options"] = [
+                'array',
+                'required_if:' . $i . '.type,3,4,5',
+
+            ];
+            $rules["$i.options.*"] = 'required|string|max:255';
             $rules["$i.required"] = 'required|boolean';
         }
 
         $messages = [
-            '0.id.required' => 'The form ID is required.',
-            '0.id.integer' => 'The form ID must be an integer.',
             '1.title.required' => 'The form title is required.',
             '1.title.string' => 'The form title must be a string.',
             '1.title.max' => 'The form title must not exceed 255 characters.',
@@ -163,6 +165,8 @@ class FormController extends Controller
             '*.name.string' => 'The question name must be a string.',
             '*.name.max' => 'The question name must not exceed 255 characters.',
             '*.options.array' => 'The options must be an array.',
+            '*.options.required_if' => 'There should be atleast one option.',
+            '*.options.*.required' => 'the option name is required',
             '*.options.*.string' => 'Each option must be a string.',
             '*.options.*.max' => 'Each option must not exceed 255 characters.',
             '*.required.required' => 'The required field is required.',

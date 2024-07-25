@@ -120,7 +120,7 @@ function addQuestion(event){
             htmlcode = `
             <div class="multipleChoice">
             <div class="form-group header">
-                <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
+                <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question" required></div>
                 <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text">Long Text</option>
@@ -258,7 +258,7 @@ function addMultipleChoiceOptionButton(e) {
 
     var newRadio = document.createElement('input');
     newRadio.type = 'radio';
-    newRadio.className = 'form-check-input';
+    newRadio.classList.add('form-check-input');
     newRadio.name = 'mcq';
     newRadio.id = 'mcqOption' + boxNo + MultipleChoiceOptionCount;
     newRadio.value = 'option';

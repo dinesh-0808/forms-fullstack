@@ -15,7 +15,7 @@ function dropdownChangeButton(event) {
             div.innerHTML = `
             <div class="form-group header">
                 <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
-                <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
+                <select class="DropDown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text" selected>Short Text</option>
                     <option value="long-text">Long Text</option>
                     <option value="multiple-choice">Multiple Choice</option>
@@ -50,7 +50,7 @@ function dropdownChangeButton(event) {
             div.innerHTML = `
             <div class="form-group header">
                 <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
-                <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
+                <select class="DropDown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text" selected>Long Text</option>
                     <option value="multiple-choice">Multiple Choice</option>
@@ -85,7 +85,7 @@ function dropdownChangeButton(event) {
             div.innerHTML = `
             <div class="form-group header">
                 <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
-                <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
+                <select class="DropDown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text">Long Text</option>
                     <option value="multiple-choice" selected>Multiple Choice</option>
@@ -124,7 +124,7 @@ function dropdownChangeButton(event) {
             div.innerHTML = `
             <div class="form-group header">
                 <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
-                <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
+                <select class="DropDown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text">Long Text</option>
                     <option value="multiple-choice">Multiple Choice</option>
@@ -161,7 +161,7 @@ function dropdownChangeButton(event) {
             div.innerHTML = `
             <div class="form-group header">
                 <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="Question"></div>
-                <select class="dropdown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
+                <select class="DropDown" dropdown="${DropDownOptionsBoxCount}" onchange="dropdownChangeButton(event)">
                     <option value="short-text">Short Text</option>
                     <option value="long-text">Long Text</option>
                     <option value="multiple-choice">Multiple Choice</option>

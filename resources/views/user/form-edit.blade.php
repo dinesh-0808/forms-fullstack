@@ -7,68 +7,10 @@
 
 
 @section('content')
-<div id="app">
-    <nav class="navbar navbar-light shadow-sm" style="background-color: #673AB7;">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/home') }}" style="color: white;">
-                {{ config('app.name', 'MY FORMS') }}
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                {{-- <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
-
-                </ul> --}}
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto">
-                    <!-- Authentication Links -->
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}" style="color: white;">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}" style="color: white;">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" style="color: white;" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    @endguest
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
 
 <div class="container mt-5 custom-container">
     <div id="form-container-title">
-        <div class="bg-white rounded shadow-sm p-4 mb-3 preview-button">
+        <div class="bg-white rounded shadow-sm p-4 mb-3 preview-button" style="margin-left: 40px">
             <h1 style="text-align: center;">MY FORMS</h1>
             <button type="button" class="btn btn-secondary mt-3 btn-preview" onclick="openPreview()"><i class="fa-solid fa-eye"></i></button>
         </div>
@@ -104,7 +46,7 @@
                 <div class="shortText">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="question" value="{{ $question->name }}"></div>
-                        <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
+                        <select class="DropDown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text" selected>Short Text</option>
                             <option value="long-text">Long Text</option>
                             <option value="multiple-choice">Multiple Choice</option>
@@ -135,7 +77,7 @@
                 <div class="longText">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
-                        <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
+                        <select class="DropDown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text">Short Text</option>
                             <option value="long-text" selected>Long Text</option>
                             <option value="multiple-choice">Multiple Choice</option>
@@ -167,7 +109,7 @@
                 <div class="multipleChoice">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
-                        <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
+                        <select class="DropDown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text">Short Text</option>
                             <option value="long-text">Long Text</option>
                             <option value="multiple-choice" selected>Multiple Choice</option>
@@ -205,7 +147,7 @@
                 <div class="dropDown">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
-                        <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
+                        <select class="DropDown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text">Short Text</option>
                             <option value="long-text">Long Text</option>
                             <option value="multiple-choice">Multiple Choice</option>
@@ -244,7 +186,7 @@
                 <div class="CheckBox">
                     <div class="form-group header">
                         <div class="question"><input type="text" class="form-control question-name" id="inputHeader" aria-describedby="headerHelp" placeholder="Question" value="{{ $question->name }}"></div>
-                        <select class="dropdown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
+                        <select class="DropDown" dropdown="{{ $loop->iteration }}" onchange="dropdownChangeButton(event)">
                             <option value="short-text">Short Text</option>
                             <option value="long-text">Long Text</option>
                             <option value="multiple-choice">Multiple Choice</option>
@@ -283,11 +225,8 @@
 
 
     </div>
-{{--
-    <div class="floating-bar" id="question-type">
-        <button value="multiple-choice" class="floating-button"><i class="fa-solid fa-plus"></i></button>
-    </div> --}}
-    <button id="form-edit" class="btn btn-primary" form="{{ $form->id }}">Save</button>
+
+    <button id="form-edit" class="btn btn-primary" style="margin-left: 40px; margin-top: 20px;" form="{{ $form->id }}">Save</button>
 
 </div>
 

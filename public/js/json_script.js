@@ -32,22 +32,53 @@ function sendFormDataToLaravel() {
         },
         body: JSON.stringify(formData),
     })
-        .then((response) => {
-            Swal.fire({
-                title: 'Success!',
-                text: 'Form saved successfully.',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = "/home";
+    .then((response) => {
+        // Check if the response status is not ok
+        console.log(response);
+        if (!response.ok) {
+            // Return the response as JSON, so it can be processed in the next `then`
+            return response.json().then((errorData) => {
+                // Throw an error with the message from the response
+                var err = "";
+                for (const key in errorData.errors) {
+                    if (errorData.errors.hasOwnProperty(key)) {
+                        const messages = errorData.errors[key];
+                        messages.forEach(message => {
+                            err += message;
+                            err += '\n';
+                        });
+                    }
                 }
+                throw new Error(
+                    err
+                );
             });
-
-        })
-        .catch((error) => {
-            console.error("Error:", error);
+        }
+        return response.json(); // Process the response data
+    })
+    .then((data) => {
+        // If the request was successful, show a success alert
+        Swal.fire({
+            title: 'Success!',
+            text: 'Form saved successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/home";
+            }
         });
+    })
+    .catch((error) => {
+        // Handle errors including validation errors
+        Swal.fire({
+            title: 'Error!',
+            text: error.message, // Display error message
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        console.error("Error:", error);
+    });
 }
 function editFormDataToLaravel() {
     let formData = editJsonForm();
@@ -70,21 +101,53 @@ function editFormDataToLaravel() {
         },
         body: JSON.stringify(formData),
     })
-        .then((response) => {
-            Swal.fire({
-                title: 'Success!',
-                text: 'Form edited successfully.',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = "/home";
+    .then((response) => {
+        // Check if the response status is not ok
+        console.log(response);
+        if (!response.ok) {
+            // Return the response as JSON, so it can be processed in the next `then`
+            return response.json().then((errorData) => {
+                // Throw an error with the message from the response
+                var err = "";
+                for (const key in errorData.errors) {
+                    if (errorData.errors.hasOwnProperty(key)) {
+                        const messages = errorData.errors[key];
+                        messages.forEach(message => {
+                            err += message;
+                            err += '\n';
+                        });
+                    }
                 }
+                throw new Error(
+                    err
+                );
             });
-        })
-        .catch((error) => {
-            console.error("Error:", error);
+        }
+        return response.json(); // Process the response data
+    })
+    .then((data) => {
+        // If the request was successful, show a success alert
+        Swal.fire({
+            title: 'Success!',
+            text: 'Form saved successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/home";
+            }
         });
+    })
+    .catch((error) => {
+        // Handle errors including validation errors
+        Swal.fire({
+            title: 'Error!',
+            text: error.message, // Display error message
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        console.error("Error:", error);
+    });
 }
 
 

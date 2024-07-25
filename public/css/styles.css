@@ -15,6 +15,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     border: 2px solid rgba(108, 117, 125, 0.2);
     position: relative;
+    margin-left: 40px;
 
 }
 
@@ -202,9 +203,9 @@ body {
 .question {
     font-size: 18px;
 }
-.dropdown {
-    height: 65px; /* Adjust the height as needed */
-    width: 300px;
+.DropDown {
+    /* height: 65px; Adjust the height as needed */
+   /* width: 300px; */
 
 }
 /*
