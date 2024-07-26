@@ -5,6 +5,8 @@
             text-align: center;
     }
 </style>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
 @endsection
 @section('content')
     <div class="container">
@@ -48,7 +50,7 @@
                         <div class="card-body">
                             @if (count($forms) > 0)
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered hover" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th style="text-align: center;">Id</th>
@@ -64,7 +66,7 @@
                                             @foreach ($forms as $form)
                                                 <tr>
                                                     <td style="text-align: center;">
-                                                        {{ (($forms->perPage())*($forms->currentPage()-1)) + $loop->iteration }}
+                                                        {{$loop->iteration }}
                                                     </td>
                                                     <td style="text-align: center;">
                                                         {{ $form->name }}
@@ -105,7 +107,6 @@
 
                                         </tbody>
                                     </table>
-                                    {{ $forms->links() }}
                                     @else
                                     <div class="container" style="text-align: center">
                                         <h5>No forms yet</h5>
@@ -124,8 +125,11 @@
 
 
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#dataTable');
+    </script>
     {{-- <script>
     $(document).ready(function() {
         $('.toggleButton').on('change', function() {

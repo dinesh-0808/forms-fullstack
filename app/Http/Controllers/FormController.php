@@ -11,7 +11,6 @@ use App\Models\Answer;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response as FacadeResponse;
 use Illuminate\Support\Facades\Validator;
-use Exception;
 
 class FormController extends Controller
 {
