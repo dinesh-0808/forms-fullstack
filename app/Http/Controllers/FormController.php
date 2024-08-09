@@ -59,7 +59,10 @@ class FormController extends Controller
         for ($i = 1; $i < count($data); $i++) {
             $rules["$i.type"] = 'required|integer|in:1,2,3,4,5';
             $rules["$i.name"] = 'nullable|string|max:255';
-            $rules["$i.options"] = 'required|array|min:1';
+            $rules["$i.options"] = [
+                'array',
+                'required_if:' . $i . '.type,3,4,5',
+            ];
             $rules["$i.options.*"] = 'required|string|max:255';
             $rules["$i.required"] = 'required|boolean';
         }

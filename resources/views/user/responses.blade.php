@@ -73,6 +73,25 @@
             margin-top: -30px;
         }
 
+        #topBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 20px; /* Place the button at the bottom of the page */
+            right: 30px; /* Place the button 30px from the right */
+            z-index: 99; /* Make sure it does not overlap */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            background-color: #FFE9FF;
+            /* color: white; Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 5px;
+            border-radius: 10px;
+            font-size: 40px; /* Increase font size */
+        }
+
+        #topBtn:hover {
+            color: red;
+        }
     </style>
 @endsection
 @section('content')
@@ -357,7 +376,7 @@
             </div>
         </div>
     </div>
-
+    <button onclick="topFunction()" id="topBtn" title="Go to top"><i class="fa-solid fa-angle-up"></i></button>
     <!-- JavaScript for copying link to clipboard -->
     <script>
         function copyLink() {
@@ -427,4 +446,25 @@
         });
     </script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script>
+        // Get the button:
+        let mybutton = document.getElementById("topBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        // document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
 @endsection

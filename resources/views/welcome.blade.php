@@ -102,6 +102,7 @@
             </div>
         </div>
     </section>
+
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
